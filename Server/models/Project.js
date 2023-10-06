@@ -1,26 +1,31 @@
 const mongoose = require('mongoose');
 
-const projectSchema = new mongoose.Schema({
-  title: String,
+const { Schema } = mongoose;
+
+const projectSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   genre: String,
   bpm: Number,
   description: String,
   image: String,
   files: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'File',
     },
   ],
   collaborators: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
     },
   ],
   messages: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Message',
     },
   ],

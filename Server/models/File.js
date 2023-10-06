@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const fileSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const fileSchema = new Schema({
   url: String,
 });
 

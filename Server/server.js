@@ -9,22 +9,22 @@ const Project = require('./models/Project');
 const File = require('./models/File');
 const Message = require('./models/Message');
 
-const typeDefs = require('./graphql/schema');
-const resolvers = require('./graphql/resolvers');
+// const typeDefs = require('./graphql/schema');
+// const resolvers = require('./graphql/resolvers');
 
 const app = express();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req }) => {
-    // You can use this context to authenticate users if needed
-    // For simplicity, let's just pass the User model to the context
-    return { User };
-  },
-});
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: ({ req }) => {
+//     // You can use this context to authenticate users if needed
+//     // For simplicity, let's just pass the User model to the context
+//     return { User };
+//   },
+// });
 
-server.applyMiddleware({ app });
+// server.applyMiddleware({ app });
 
 db
   .once('open', () => {

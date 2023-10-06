@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
 
-const profileSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const profileSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
   },
   projects: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Project',
     },
   ],
