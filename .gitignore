@@ -1,1 +1,8 @@
-node_modules
+# Node.js
+node_modules/
+# Visual Studio Code
+.vscode
+# Debug logs
+debug.log
+# macOS
+.DS_Store

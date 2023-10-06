@@ -1,38 +1,38 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const path = require('path');
+const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const User = require('./models/User');
-const Profile = require('./models/Profile');
-const Project = require('./models/Project');
-const File = require('./models/File');
-const Message = require('./models/Message');
-
-// const typeDefs = require('./graphql/schema');
-// const resolvers = require('./graphql/resolvers');
-
+const PORT = process.env.PORT || 3001;
 const app = express();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    return { /* context data */ };
+  },
+});
 
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-//   context: ({ req }) => {
-//     // You can use this context to authenticate users if needed
-//     // For simplicity, let's just pass the User model to the context
-//     return { User };
-//   },
-// });
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// server.applyMiddleware({ app });
+// Start the Apollo Server asynchronously
+const startApolloServer = async () => {
+  await server.start();
+  server.applyMiddleware({ app });
 
-db
-  .once('open', () => {
-    console.log('Connected to MongoDB');
-    app.listen(3000, () => {
-      console.log('Server is running on http://localhost:3000/graphql');
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`Connected to MongoDB`);
+      console.log(`Server is running on http://localhost:${PORT}${server.graphqlPath}`);
     });
-  })
-  .on('error', (error) => {
-    console.error('Error connecting to MongoDB:', error);
   });
+};
+
+// Error handling for MongoDB connection
+db.on('error', (error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
+
+// Call the async function to start the server
+startApolloServer();
