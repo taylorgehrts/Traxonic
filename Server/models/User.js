@@ -7,6 +7,11 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
 
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+
   username: {
     type: String,
     required: true,
