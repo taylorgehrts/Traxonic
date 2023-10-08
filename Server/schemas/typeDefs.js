@@ -3,6 +3,7 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type User {
     id: ID
+    username: String
     first: String
     last: String
     email: String
@@ -16,6 +17,7 @@ const typeDefs = gql`
     location: String
     bio: String
     image: String
+    links: [String]
   }
   
   type Project {
@@ -33,28 +35,35 @@ const typeDefs = gql`
   type File {
     id: ID
     url: String
-    uploadedOn: String  # Assuming you want to store the date as a string for simplicity
+    duration: Int
+    size: Int
+    uploadedOn: String
   }
   
   type Message {
     id: ID
     user: User
-    createdOn: String  # Assuming you want to store the date as a string for simplicity
+    createdOn: String
     text: String
   }
   
   type Query {
     findUser(id: ID): User
+    findUserByUsername(username: String): User
+    findAllUsers: [User] # New query to find all users
     findByGenre(genre: String): [Project]
   }
   
   type Mutation {
-    addUser(first: String, last: String, email: String, password: String): User
-    updateProfile(userId: ID, location: String, bio: String, image: String): Profile
+    addUser(username: String, first: String, last: String, email: String, password: String): User
+    updateUser(userId: ID, username: String, first: String, last: String, email: String): User
+    removeUser(userId: ID): Boolean
+    addProfile(userId: ID, location: String, bio: String, image: String, links: [String]): Profile
+    removeProfile(profileId: ID): Boolean
     addProject(userId: ID, title: String, genre: String, bpm: Int, description: String): Project
     removeProject(projectId: ID): Boolean
     updateProject(projectId: ID, title: String, genre: String, bpm: Int, description: String): Project
-    addFile(projectId: ID, fileUrl: String): File
+    addFile(projectId: ID, fileUrl: String, duration: Int, size: Int): File
     removeFile(fileId: ID): Boolean
     addCollaborator(projectId: ID, userId: ID): Project
     removeCollaborator(projectId: ID, userId: ID): Project
