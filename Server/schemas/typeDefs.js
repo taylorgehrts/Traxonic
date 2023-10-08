@@ -46,6 +46,10 @@ const typeDefs = gql`
     createdOn: String
     text: String
   }
+
+  type Token {
+    token: String
+  }
   
   type Query {
     findUser(id: ID): User
@@ -58,7 +62,10 @@ const typeDefs = gql`
     addUser(username: String, first: String, last: String, email: String, password: String): User
     updateUser(userId: ID, username: String, first: String, last: String, email: String): User
     removeUser(userId: ID): Boolean
+    login(email: String, password: String): Token # New mutation for login
+    logout: Boolean # New mutation for logout
     addProfile(userId: ID, location: String, bio: String, image: String, links: [String]): Profile
+    updateProfile(userId: ID, location: String, bio: String, image: String, links: [String]): Profile
     removeProfile(profileId: ID): Boolean
     addProject(userId: ID, title: String, genre: String, bpm: Int, description: String): Project
     removeProject(projectId: ID): Boolean
@@ -71,6 +78,7 @@ const typeDefs = gql`
     updateMessage(projectId: ID, messageId: ID, text: String): Message
     removeMessage(projectId: ID, messageId: ID): Boolean
   }
+  
 `;
 
 module.exports = typeDefs;
