@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const { User, Profile, Message, Project, File } = require('../models');
+const { User, Profile, Message, Project, File, Collaborator, PublicFile } = require('../models');
 
 db.once('open', async () => {
     let users = await User.insertMany(userSeed)
@@ -27,16 +27,18 @@ db.once('open', async () => {
 
 
 const userSeed = [
-    {
+    { 
+        username:"test3",
         first: "taylor",
         last: "last_name_1",
-        email: "paylor1@example.com",
+        email: "saylor1@example.com",
         password: "password12222"
     },
     {
+        username:"test4",
         first: "taylor",
         last: "last_name_2",
-        email: "paylor2@example.com",
+        email: "saylor2@example.com",
         password: "password233333"
     },
     

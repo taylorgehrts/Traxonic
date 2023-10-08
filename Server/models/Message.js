@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('./User'); // Adjusted import statement for User model
 
 const { Schema } = mongoose;
 

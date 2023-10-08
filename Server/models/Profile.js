@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = require('./User'); // Adjusted import statement for User model
+const Project = require('./Project'); // Adjusted import statement for Project model
 
 const { Schema } = mongoose;
 
@@ -16,6 +18,12 @@ const profileSchema = new Schema({
   location: String,
   bio: String,
   image: String,
+  links: [
+    {
+      title: String,
+      url: String,
+    },
+  ],
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
