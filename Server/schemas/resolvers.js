@@ -84,50 +84,147 @@ const resolvers = {
       }
     },
 
-    removeUser: async (_, { userId }, context) => {
-        // Add authentication check
-        if (!context.user) {
-            throw new AuthenticationError('Authentication required');
-        }
-    
-        try {
-            // Check if the authenticated user is removing their own account
-            if (context.user._id === userId) {
-                // Perform the logic to remove the user (and associated data)
-                // Example: You might want to delete the user, their profile, projects, files, messages, etc.
-                await User.findByIdAndRemove(userId);
-    
-                // Return true to indicate success
-                return true;
-            } else {
-                // If the user is not removing their own account, throw an error
-                throw new AuthenticationError('You are not authorized to remove this user');
-            }
-        } catch (error) {
-            console.error('Error removing user:', error);
-            throw new ApolloError('Error removing user');
-        }
-    },
-  
-
-    updateProfile: async (_, args, context) => {
+    updateUser: async (
+      _,
+      { userId, username, first, last, email },
+      context
+    ) => {
       // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
 
       try {
-        const profile = await Profile.findOneAndUpdate(
-          { user: context.user._id },
-          { $set: args },
-          { new: true }
-        );
-        return profile;
+        // Check if the authenticated user is updating their own account
+        if (context.user._id === userId) {
+          // Perform the logic to update the user's information
+          const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { username, first, last, email },
+            { new: true }
+          );
+
+          // Return the updated user
+          return updatedUser;
+        } else {
+          // If the user is not updating their own account, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to update this user"
+          );
+        }
+      } catch (error) {
+        console.error("Error updating user:", error);
+        throw new ApolloError("Error updating user");
+      }
+    },
+
+    removeUser: async (_, { userId }, context) => {
+      // Add authentication check
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      try {
+        // Check if the authenticated user is removing their own account
+        if (context.user._id === userId) {
+          // Perform the logic to remove the user (and associated data)
+          // Example: You might want to delete the user, their profile, projects, files, messages, etc.
+          await User.findByIdAndRemove(userId);
+
+          // Return true to indicate success
+          return true;
+        } else {
+          // If the user is not removing their own account, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to remove this user"
+          );
+        }
+      } catch (error) {
+        console.error("Error removing user:", error);
+        throw new ApolloError("Error removing user");
+      }
+    },
+
+    addProfile: async (_, { userId, location, bio, image, links }, context) => {
+      // Add authentication check
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      try {
+        console.log("Adding profile for user:", userId);
+
+        // Check if the authenticated user is adding a profile for themselves
+        if (context.user._id === userId) {
+          console.log(
+            "Adding profile for authenticated user:",
+            context.user._id
+          );
+
+          // Check if the user already has a profile
+          const existingProfile = await Profile.findOne({ user: userId });
+
+          if (existingProfile) {
+            throw new ApolloError("User already has a profile");
+          }
+
+          // Perform the logic to add the user's profile
+          const newProfile = await Profile.create({
+            user: userId,
+            location,
+            bio,
+            image,
+            links,
+          });
+
+          // Return the newly created profile
+          return newProfile;
+        } else {
+          // If the user is not adding a profile for themselves, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to add a profile for this user"
+          );
+        }
+      } catch (error) {
+        console.error("Error adding profile:", error);
+        throw new ApolloError("Error adding profile");
+      }
+    },
+
+    updateProfile: async (
+      _,
+      { userId, location, bio, image, links },
+      context
+    ) => {
+      // Add authentication check
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      try {
+        // Check if the authenticated user is updating their own profile
+        if (context.user._id === userId) {
+          // Find and update the user's profile
+          const updatedProfile = await Profile.findOneAndUpdate(
+            { user: userId },
+            { $set: { location, bio, image, links } },
+            { new: true } // Return the updated document
+          ).populate("user"); // Ensure that the 'user' field is populated
+
+          // Return the updated profile
+          return updatedProfile;
+        } else {
+          // If the user is not updating their own profile, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to update this profile"
+          );
+        }
       } catch (error) {
         console.error("Error updating profile:", error);
         throw new ApolloError("Error updating profile");
       }
     },
+
     // Add other mutations for projects, files, collaborators, messages, etc.
   },
   // Add other resolvers for User, Profile, Project, File, Message types

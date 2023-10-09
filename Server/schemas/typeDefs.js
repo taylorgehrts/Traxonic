@@ -10,6 +10,11 @@ const typeDefs = gql`
     password: String
   }
   
+  type Link {
+    title: String
+    url: String
+  }
+
   type Profile {
     id: ID
     user: User
@@ -17,7 +22,12 @@ const typeDefs = gql`
     location: String
     bio: String
     image: String
-    links: [String]
+    links: [Link]  # Use the Link type here
+  }
+
+  input LinkInput {
+    title: String
+    url: String
   }
   
   type Project {
@@ -60,13 +70,21 @@ const typeDefs = gql`
   
   type Mutation {
     addUser(username: String, first: String, last: String, email: String, password: String): User
+
     updateUser(userId: ID, username: String, first: String, last: String, email: String): User
+
     removeUser(userId: ID): Boolean
+
     login(email: String, password: String): Token # New mutation for login
+
     logout: Boolean # New mutation for logout
-    addProfile(userId: ID, location: String, bio: String, image: String, links: [String]): Profile
-    updateProfile(userId: ID, location: String, bio: String, image: String, links: [String]): Profile
+    
+    addProfile(userId: ID, location: String, bio: String, image: String, links: [LinkInput]): Profile
+
+    updateProfile(userId: ID, location: String, bio: String, image: String, links: [LinkInput]): Profile
+    
     removeProfile(profileId: ID): Boolean
+
     addProject(userId: ID, title: String, genre: String, bpm: Int, description: String): Project
     removeProject(projectId: ID): Boolean
     updateProject(projectId: ID, title: String, genre: String, bpm: Int, description: String): Project
@@ -78,7 +96,6 @@ const typeDefs = gql`
     updateMessage(projectId: ID, messageId: ID, text: String): Message
     removeMessage(projectId: ID, messageId: ID): Boolean
   }
-  
 `;
 
 module.exports = typeDefs;
