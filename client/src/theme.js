@@ -11,6 +11,9 @@ const theme = createTheme({
     background: {
       paper: '#3B3C4B', // Change this to your desired background color
     },
+    text: {
+        primary: '#ffffff', // Set the text color to white
+      },
   },
   typography: {
     fontFamily: 'Arial, sans-serif', // Change this to your desired font
