@@ -75,7 +75,7 @@ const typeDefs = gql`
 
     removeUser(userId: ID): Boolean
 
-    login(email: String, password: String): Token # New mutation for login
+    login(email: String, password: String): Token 
 
     logout: Boolean # New mutation for logout
     
