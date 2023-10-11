@@ -8,7 +8,7 @@ import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'your-graphql-endpoint', // Replace with your actual GraphQL endpoint
+  uri: 'http://localhost:3001/graphql', 
   cache: new InMemoryCache(),
 });
 
