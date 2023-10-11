@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Projects() {
+function Projects({ handleFileUpload }) {
   return (
     <div>
-      <h1>Explore Our Projects</h1>
+      <h1>Home</h1>
+      <input type="file" onChange={handleFileUpload} />
     </div>
   );
 }

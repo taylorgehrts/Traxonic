@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-traxonic-dev-141524-authRole",
+      "UnauthRoleArn": "arn:aws:iam::888164342299:role/amplify-traxonic-dev-141524-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::888164342299:role/amplify-traxonic-dev-141524-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-traxonic-dev-141524-deployment",
+      "UnauthRoleName": "amplify-traxonic-dev-141524-unauthRole",
+      "StackName": "amplify-traxonic-dev-141524",
+      "StackId": "arn:aws:cloudformation:eu-central-1:888164342299:stack/amplify-traxonic-dev-141524/dc3693e0-682f-11ee-92e5-02b356122823",
+      "AmplifyAppId": "d1kg7r087dnktz"
+    },
+    "categories": {
+      "auth": {
+        "traxonic931e8fd8": {}
+      },
+      "storage": {
+        "traxonics3bucket": {}
+      }
+    }
+  }
+}
