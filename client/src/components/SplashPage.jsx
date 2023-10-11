@@ -7,6 +7,7 @@ import SignInForm from './SignInForm';
 
 const SplashPage = () => {
   return (
+    <Container maxWidth="xl" sx={{ background: '#090810' }}>
     <Container maxWidth="md" sx={{ marginTop: '2rem' }}>
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={12}>
@@ -30,6 +31,7 @@ const SplashPage = () => {
           </Card>
         </Grid>
       </Grid>
+    </Container>
     </Container>
   );
 };

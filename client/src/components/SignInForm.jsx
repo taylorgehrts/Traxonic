@@ -1,8 +1,9 @@
 // SignInForm.jsx
 import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, ThemeProvider } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';  // Import your actual mutation
+import theme from '../theme';
 
 const SignInForm = () => {
   const [login] = useMutation(LOGIN);
@@ -36,6 +37,7 @@ const SignInForm = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <form>
       <TextField
         label="Email"
@@ -54,10 +56,11 @@ const SignInForm = () => {
         fullWidth
         margin="normal"
       />
-      <Button variant="contained" color="primary" onClick={handleSignIn}>
+      <Button variant="contained" color="info" onClick={handleSignIn}>
         Sign In
       </Button>
     </form>
+    </ThemeProvider>
   );
 };
 

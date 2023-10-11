@@ -84,7 +84,7 @@ const SignUpForm = () => {
         margin="normal"
       />
       
-      <Button variant="contained" color="primary" onClick={handleSignUp}>
+      <Button variant="contained" color="info" onClick={handleSignUp}>
         Sign Up
       </Button>
     </form>
