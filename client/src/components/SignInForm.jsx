@@ -78,6 +78,14 @@ const SignInForm = () => {
           onChange={handleInputChange}
           fullWidth
           margin="normal"
+          InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
+          sx={{
+            'input:-webkit-autofill': {
+              '-webkit-text-fill-color': '#ffffff !important',
+              '-webkit-box-shadow': '0 0 0px 1000px #3B3C4B inset !important',
+              transition: 'background-color 5000s ease-in-out 0s',
+            },
+          }}
         />
         <TextField
           label="Password"
@@ -87,6 +95,14 @@ const SignInForm = () => {
           onChange={handleInputChange}
           fullWidth
           margin="normal"
+          InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
+          sx={{
+            'input:-webkit-autofill': {
+              '-webkit-text-fill-color': '#ffffff !important',
+              '-webkit-box-shadow': '0 0 0px 1000px #3B3C4B inset !important',
+              transition: 'background-color 5000s ease-in-out 0s',
+            },
+          }}
         />
         <Button variant="contained" color="info" onClick={handleSignIn}>
           Sign In

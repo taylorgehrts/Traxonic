@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')).render(
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
         <React.StrictMode>
-          <App />
+          <App  />
         </React.StrictMode>
       </ApolloProvider>
     </ThemeProvider>

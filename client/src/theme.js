@@ -16,6 +16,7 @@ const theme = createTheme({
     },
     text: {
         primary: '#ffffff', // Set the text color to white
+        placeholder: '#C8C7C7', // Set the color for placeholder text
       },
   },
   typography: {
