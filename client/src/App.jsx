@@ -5,9 +5,9 @@ import SplashPage from './components/SplashPage';
 import Projects from './components/Projects';
 import Connect from './components/Connect';
 import { Amplify, Auth, Storage } from 'aws-amplify';
-import awsConfig from '../src/aws-exports';
+import awsmobile from '../../src/aws-exports';
 
-Amplify.configure(awsConfig);
+Amplify.configure(awsmobile);
 
 function App() {
   const [user, setUser] = useState(null);
