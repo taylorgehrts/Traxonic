@@ -1,8 +1,9 @@
-// SignInForm.jsx
+
 import React, { useState } from 'react';
 import { TextField, Button, ThemeProvider } from '@mui/material';
+import { Auth } from 'aws-amplify';  // Import Auth from aws-amplify
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations'; // Import your actual mutation
+import { LOGIN } from '../utils/mutations'; 
 import theme from '../theme';
 
 const SignInForm = () => {
@@ -23,9 +24,13 @@ const SignInForm = () => {
 
   const handleSignIn = async () => {
     try {
-      const result = await login({
-        variables: loginInput,
-      });
+      // Use both mutation and Auth.signIn
+      const result = await Promise.all([
+        login({
+          variables: loginInput,
+        }),
+        Auth.signIn(loginInput.email, loginInput.password),
+      ]);
 
       console.log('User logged in:', result);
 
@@ -80,9 +85,9 @@ const SignInForm = () => {
           margin="normal"
           InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
           sx={{
-            'input:-webkit-autofill': {
-              '-webkit-text-fill-color': '#ffffff !important',
-              '-webkit-box-shadow': '0 0 0px 1000px #3B3C4B inset !important',
+            input: {
+              WebkitTextFillColor: '#ffffff !important',
+              WebkitBoxShadow: '0 0 0px 1000px #3B3C4B inset !important',
               transition: 'background-color 5000s ease-in-out 0s',
             },
           }}
@@ -97,9 +102,9 @@ const SignInForm = () => {
           margin="normal"
           InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
           sx={{
-            'input:-webkit-autofill': {
-              '-webkit-text-fill-color': '#ffffff !important',
-              '-webkit-box-shadow': '0 0 0px 1000px #3B3C4B inset !important',
+            input: {
+              WebkitTextFillColor: '#ffffff !important',
+              WebkitBoxShadow: '0 0 0px 1000px #3B3C4B inset !important',
               transition: 'background-color 5000s ease-in-out 0s',
             },
           }}

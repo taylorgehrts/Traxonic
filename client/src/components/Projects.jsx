@@ -3,7 +3,7 @@ import React from 'react';
 function Projects({ handleFileUpload }) {
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Projects</h1>
       <input type="file" onChange={handleFileUpload} />
     </div>
   );

@@ -27,4 +27,14 @@ export const LOGIN = gql`
       
     }
   }
+
+  
+`;
+
+export const VERIFY_USER = gql`
+  mutation VerifyUser($username: String!, $verificationCode: String!) {
+    verifyUser(username: $username, verificationCode: $verificationCode) {
+      username
+    }
+  }
 `;
