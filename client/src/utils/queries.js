@@ -11,6 +11,7 @@ export const GET_PROJECTS = gql`
     ownerUsername
     
     
+    
   }
 }
 `;
@@ -20,7 +21,7 @@ export const FIND_USER = gql`
     findUser(id: $id) {
       id
       username
-      # Include other user fields as needed
+      
     }
   }
 `;

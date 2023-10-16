@@ -15,8 +15,10 @@ import { ADD_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, FIND_USER } from "../utils/queries";
 
 import theme from "../theme";
+import { useHistory } from "react-router-dom";
 
 const ProjectsPage = () => {
+  const history = useHistory();
   const userId = localStorage.getItem("userId");
 
   // Use the GET_PROJECTS query to fetch projects
@@ -25,7 +27,11 @@ const ProjectsPage = () => {
   });
 
   // Use the FIND_USER query to fetch user details
-  const { loading: userLoading, error: userError, data: userData } = useQuery(FIND_USER, {
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(FIND_USER, {
     variables: { id: userId },
   });
 
@@ -77,24 +83,24 @@ const ProjectsPage = () => {
 
           {/* List of user's projects */}
           <List>
-          {projects.map((project) => (
-    <ListItem
-      key={project.id}
-      sx={{ background: "#121212", marginBottom: "8px" }}
-    >
-      <Paper elevation={3} sx={{ padding: "16px", width: "100%" }}>
-        <ListItemText
-          primary={project.title}
-          secondary={`Genre: ${project.genre} | BPM: ${
-            project.bpm
-          } | Owner: ${
-            user ? user.username : "Unknown"
-          }`}
-        />
-        {/* Add other project details as needed */}
-      </Paper>
-    </ListItem>
-  ))}
+            {projects.map((project) => (
+              <ListItem
+              key={project.id}
+              sx={{ background: "#121212", marginBottom: "8px" }}
+              onClick={() => history.push(`/projects/${project.id}`)}
+            >
+                  
+                <Paper elevation={3} sx={{ padding: "16px", width: "100%" }}>
+                  <ListItemText
+                    primary={project.title}
+                    secondary={`Genre: ${project.genre} | BPM: ${
+                      project.bpm
+                    } | Owner: ${user ? user.username : "Unknown"}`}
+                  />
+                  {/* Add other project details as needed */}
+                </Paper>
+              </ListItem>
+            ))}
           </List>
 
           <Button
