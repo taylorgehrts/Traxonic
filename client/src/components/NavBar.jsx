@@ -1,4 +1,5 @@
 import React from 'react';
+import { useApolloClient } from '@apollo/client';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,8 +13,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link, useLocation } from 'react-router-dom';  // Import Link and useLocation
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import { useAuth } from '../components/AuthContext'; // Update the path
+
+// Import LOGOUT mutation
+import { LOGOUT } from '../utils/mutations';
 
 const pages = [
   { label: 'Home', path: '/' },
@@ -26,8 +31,11 @@ const settings = ['Profile Settings', 'Account Settings', 'Dashboard', 'Logout']
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const location = useLocation();  // Get the current location
+  const location = useLocation();
+  const history = useHistory();
   const theme = useTheme();
+  const { user, onLogout } = useAuth();
+  const client = useApolloClient(); // Get Apollo Client instance
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +51,24 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Call the Apollo Server logout mutation
+      await client.mutate({
+        mutation: LOGOUT,
+      });
+
+      // Call the AWS Amplify logout function
+      await onLogout();
+
+      // Programmatically redirect to the home page
+      history.push('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Handle error as needed
+    }
   };
 
   return (
@@ -169,7 +195,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={setting === 'Logout' ? handleLogout : handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

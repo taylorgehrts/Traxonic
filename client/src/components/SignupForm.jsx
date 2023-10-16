@@ -4,8 +4,10 @@ import { Auth } from "aws-amplify"; // Import Auth from aws-amplify
 import { useMutation } from "@apollo/client";
 import { ADD_USER, VERIFY_USER } from "../utils/mutations";
 import theme from "../theme";
+import { useAuth } from "../components/AuthContext"; // Update the path
 
 const SignUpForm = () => {
+  const { onLogout } = useAuth(); // Use onLogout from the context
   const [addUser] = useMutation(ADD_USER);
   const [verifyUser] = useMutation(VERIFY_USER); // Use the verification mutation
 

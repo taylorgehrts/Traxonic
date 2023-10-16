@@ -1,12 +1,13 @@
-
 import React, { useState } from 'react';
 import { TextField, Button, ThemeProvider } from '@mui/material';
-import { Auth } from 'aws-amplify';  // Import Auth from aws-amplify
+import { Auth } from 'aws-amplify';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations'; 
+import { LOGIN } from '../utils/mutations';
 import theme from '../theme';
+import { useAuth } from '../components/AuthContext'; // Update the path
 
 const SignInForm = () => {
+  const { onLogout } = useAuth(); // Use onLogout from the context
   const [login] = useMutation(LOGIN);
 
   const [loginInput, setLoginInput] = useState({
@@ -22,56 +23,49 @@ const SignInForm = () => {
     });
   };
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleSignIn = async () => {
     try {
-      // Use both mutation and Auth.signIn
-      const result = await Promise.all([
-        login({
-          variables: loginInput,
-        }),
+      // Use Promise.all to wait for both login and Amplify sign-in
+      const [graphqlResult, amplifySignInResult] = await Promise.all([
+        login({ variables: loginInput }),
         Auth.signIn(loginInput.email, loginInput.password),
       ]);
-
-      console.log('User logged in:', result);
-
-      // If login is successful, you might want to redirect the user or perform other actions
+  
+      // Handle GraphQL result
+      const { data } = graphqlResult;
+      console.log('GraphQL data:', data); // Log the entire data object
+  
+      if (data && data.login) {
+        const { token, user } = data.login; // Updated to access nested token and user
+        console.log('authToken:', token); // Log authToken
+  
+        // Store tokens and user ID in localStorage
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userId', user.id);
+  
+        // Redirect or perform other actions after successful login
+      }
+  
+      // Handle Amplify sign-in result
+      console.log('Amplify Sign-in result:', amplifySignInResult);
+  
     } catch (error) {
       console.error('Error logging in:', error);
-
-      // Check if the error has a networkError property
-      if (error.networkError) {
-        console.error('Network error:', error.networkError);
-        // Handle network error, show appropriate message to the user
-        alert('A network error occurred. Please check your internet connection and try again.');
-      }
-
-      // Check if the error has a graphQLErrors property
-      if (error.graphQLErrors) {
-        // Extract specific error information
-        const firstError = error.graphQLErrors[0];
-        console.error('GraphQL error:', firstError);
-
-        // Handle specific error cases
-        if (firstError.extensions.code === 'BAD_USER_INPUT') {
-          // Handle invalid user input (e.g., wrong email or password)
-          alert('Invalid email or password. Please try again.');
-        } else if (firstError.extensions.code === 'UNAUTHENTICATED') {
-          // Handle unauthenticated user
-          alert('Authentication failed. Please check your email and password.');
-        } else {
-          // Handle other GraphQL errors
-          alert('An error occurred during login. Please try again.');
-        }
-      }
-
-      // Handle other types of errors as needed
-      // ...
-
-      // Show a generic error message to the user
-      // You might want to customize this message based on the specific error
-      alert('An error occurred during login. Please try again.');
+      // Handle errors
     }
   };
+  
+  
+  
+  
+
+  
+  
+  
+
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +77,7 @@ const SignInForm = () => {
           onChange={handleInputChange}
           fullWidth
           margin="normal"
-          InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
+          InputLabelProps={{ style: { color: theme.palette.text.placeholder } }}
           sx={{
             input: {
               WebkitTextFillColor: '#ffffff !important',
@@ -100,7 +94,7 @@ const SignInForm = () => {
           onChange={handleInputChange}
           fullWidth
           margin="normal"
-          InputLabelProps={{style: { color: theme.palette.text.placeholder } }}
+          InputLabelProps={{ style: { color: theme.palette.text.placeholder } }}
           sx={{
             input: {
               WebkitTextFillColor: '#ffffff !important',

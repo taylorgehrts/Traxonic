@@ -8,7 +8,7 @@ const {
   Project,
   PublicFile,
 } = require("../models");
-const { signToken } = require("../utils/auth");
+const { signToken, signGraphqlToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
@@ -57,23 +57,81 @@ const resolvers = {
   },
   Mutation: {
     login: async (_, { email, password }) => {
-      // Validate user credentials and generate a token
-      // You can use the signToken function from your auth module
-      const user = await User.findOne({ email });
+      try {
+        // Validate user credentials and generate a token
+        const user = await User.findOne({ email });
 
-      if (!user || !(await user.isCorrectPassword(password))) {
-        throw new AuthenticationError("Invalid credentials");
+        if (!user || !(await user.isCorrectPassword(password))) {
+          throw new AuthenticationError("Invalid credentials");
+        }
+
+        // Use the appropriate token function based on your needs
+        const token = signToken(user); // for Cognito or other purposes
+        const graphqlToken = signGraphqlToken(user); // for GraphQL
+
+        return { token, graphqlToken, user };
+      } catch (error) {
+        console.error('Error logging in:', error);
+        // Handle errors
+        if (error.networkError) {
+          console.error('Network error:', error.networkError);
+          throw new ApolloError('A network error occurred. Please check your internet connection and try again.');
+        }
+
+        if (error.graphQLErrors) {
+          const firstError = error.graphQLErrors[0];
+          console.error('GraphQL error:', firstError);
+
+          if (firstError.extensions.code === 'BAD_USER_INPUT') {
+            throw new ApolloError('Invalid email or password. Please try again.');
+          } else if (firstError.extensions.code === 'UNAUTHENTICATED') {
+            throw new AuthenticationError('Authentication failed. Please check your email and password.');
+          } else {
+            throw new ApolloError('An error occurred during login. Please try again.');
+          }
+        }
+
+        // Handle other types of errors as needed
+        // ...
+
+        // Throw a generic error to the client
+        console.error('Error during login:', error);
+        throw new ApolloError('An error occurred during login. Please try again.');
       }
-
-      const token = signToken(user);
-
-      return { token, user };
     },
-    logout: async (_, __, context) => {
-      // Handle logout logic (if needed)
-      // For example, you might invalidate the token on the client-side
-      return true;
+    logout: async function (parent, args, context) {
+      try {
+        const { req, res, user } = context;
+    
+        if (!user) {
+          console.log('User not authenticated');
+          return false;
+        }
+    
+        // Your logic to revoke or invalidate tokens (if using JWT)
+        // Example: You might store the user's token in a database and mark it as revoked
+    
+        console.log('Clearing session and cookies');
+    
+        // Clear user session (if using sessions)
+        req.session.destroy();
+    
+        // Clear cookies (if using cookies for session or token storage)
+        
+    
+        // Additional logout logic based on your authentication mechanism
+    
+        console.log('Logout successful');
+        
+        // Return true if logout was successful
+        return true;
+      } catch (error) {
+        console.error('Error during logout:', error);
+        // Handle error as needed
+        return false;
+      }
     },
+    
     addUser: async (_, args) => {
       try {
         const user = await User.create(args);
@@ -222,6 +280,38 @@ const resolvers = {
       } catch (error) {
         console.error("Error updating profile:", error);
         throw new ApolloError("Error updating profile");
+      }
+    },
+
+    addProject: async (_, { userId, title, genre, bpm, description }, context) => {
+      // Add authentication check
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      try {
+        // Check if the authenticated user is adding a project for themselves
+        if (context.user._id.toString() === userId) {
+          // Perform the logic to add the project
+          const newProject = await Project.create({
+            user: userId,
+            title,
+            genre,
+            bpm,
+            description,
+          });
+
+          // Return the newly created project
+          return newProject;
+        } else {
+          // If the user is not adding a project for themselves, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to add a project for this user"
+          );
+        }
+      } catch (error) {
+        console.error("Error adding project:", error);
+        throw new ApolloError("Error adding project");
       }
     },
 

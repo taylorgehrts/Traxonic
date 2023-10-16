@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const path = require('path');
-const { authMiddleware } = require('./utils/auth');
+const { authMiddleware, signGraphqlToken } = require('./utils/auth'); // Import new function
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 const cors = require('cors');
@@ -12,14 +11,13 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware,
+  context: ({ req, res }) => authMiddleware({ req, res }),
 });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-// Start the Apollo Server asynchronously
 const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
@@ -32,10 +30,8 @@ const startApolloServer = async () => {
   });
 };
 
-// Error handling for MongoDB connection
 db.on('error', (error) => {
   console.error('Error connecting to MongoDB:', error);
 });
 
-// Call the async function to start the server
 startApolloServer();

@@ -5,7 +5,7 @@ import Collaborators from './Collaborators.jsx';
 import Messages from './Messages';
 import Settings from './Settings';
 
-function Projects({ handleFileUpload }) {
+function Project({ handleFileUpload }) {
   const { path } = useRouteMatch();
 
   return (
@@ -34,4 +34,4 @@ function Projects({ handleFileUpload }) {
   );
 }
 
-export default Projects;
+export default Project;
