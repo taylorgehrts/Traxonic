@@ -41,6 +41,13 @@ const projectSchema = new Schema({
   ],
 });
 
+projectSchema.virtual('ownerUsername', {
+  ref: 'User',
+  localField: 'owner',
+  foreignField: '_id',
+  justOne: true,
+});
+
 const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;

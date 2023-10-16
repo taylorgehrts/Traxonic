@@ -37,6 +37,7 @@ const typeDefs = gql`
     bpm: Int
     description: String
     image: String
+    ownerUsername: String  
     files: [File]
     collaborators: [User]
     messages: [Message]
@@ -67,6 +68,7 @@ const typeDefs = gql`
     findUserByUsername(username: String): User
     findAllUsers: [User] # New query to find all users
     findByGenre(genre: String): [Project]
+    getProjects(userId: ID): [Project]
   }
   
   type Mutation {

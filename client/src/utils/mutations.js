@@ -56,7 +56,7 @@ export const ADD_PROJECT = gql`
       genre
       bpm
       description
-      
+      ownerUsername  
     }
   }
 `;

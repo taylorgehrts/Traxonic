@@ -54,6 +54,16 @@ const resolvers = {
         throw new ApolloError("Error finding users");
       }
     },
+    getProjects: async (_, { userId }, context) => {
+      // Add authentication check
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      // Fetch projects based on user ID
+      const projects = await Project.find({ owner: userId });
+      return projects;
+    },
   },
   Mutation: {
     login: async (_, { email, password }) => {
@@ -71,23 +81,31 @@ const resolvers = {
 
         return { token, graphqlToken, user };
       } catch (error) {
-        console.error('Error logging in:', error);
+        console.error("Error logging in:", error);
         // Handle errors
         if (error.networkError) {
-          console.error('Network error:', error.networkError);
-          throw new ApolloError('A network error occurred. Please check your internet connection and try again.');
+          console.error("Network error:", error.networkError);
+          throw new ApolloError(
+            "A network error occurred. Please check your internet connection and try again."
+          );
         }
 
         if (error.graphQLErrors) {
           const firstError = error.graphQLErrors[0];
-          console.error('GraphQL error:', firstError);
+          console.error("GraphQL error:", firstError);
 
-          if (firstError.extensions.code === 'BAD_USER_INPUT') {
-            throw new ApolloError('Invalid email or password. Please try again.');
-          } else if (firstError.extensions.code === 'UNAUTHENTICATED') {
-            throw new AuthenticationError('Authentication failed. Please check your email and password.');
+          if (firstError.extensions.code === "BAD_USER_INPUT") {
+            throw new ApolloError(
+              "Invalid email or password. Please try again."
+            );
+          } else if (firstError.extensions.code === "UNAUTHENTICATED") {
+            throw new AuthenticationError(
+              "Authentication failed. Please check your email and password."
+            );
           } else {
-            throw new ApolloError('An error occurred during login. Please try again.');
+            throw new ApolloError(
+              "An error occurred during login. Please try again."
+            );
           }
         }
 
@@ -95,43 +113,44 @@ const resolvers = {
         // ...
 
         // Throw a generic error to the client
-        console.error('Error during login:', error);
-        throw new ApolloError('An error occurred during login. Please try again.');
+        console.error("Error during login:", error);
+        throw new ApolloError(
+          "An error occurred during login. Please try again."
+        );
       }
     },
     logout: async function (parent, args, context) {
       try {
         const { req, res, user } = context;
-    
+
         if (!user) {
-          console.log('User not authenticated');
+          console.log("User not authenticated");
           return false;
         }
-    
+
         // Your logic to revoke or invalidate tokens (if using JWT)
         // Example: You might store the user's token in a database and mark it as revoked
-    
-        console.log('Clearing session and cookies');
-    
+
+        console.log("Clearing session and cookies");
+
         // Clear user session (if using sessions)
         req.session.destroy();
-    
+
         // Clear cookies (if using cookies for session or token storage)
-        
-    
+
         // Additional logout logic based on your authentication mechanism
-    
-        console.log('Logout successful');
-        
+
+        console.log("Logout successful");
+
         // Return true if logout was successful
         return true;
       } catch (error) {
-        console.error('Error during logout:', error);
+        console.error("Error during logout:", error);
         // Handle error as needed
         return false;
       }
     },
-    
+
     addUser: async (_, args) => {
       try {
         const user = await User.create(args);
@@ -283,7 +302,11 @@ const resolvers = {
       }
     },
 
-    addProject: async (_, { userId, title, genre, bpm, description }, context) => {
+    addProject: async (
+      _,
+      { userId, title, genre, bpm, description },
+      context
+    ) => {
       // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
@@ -294,7 +317,8 @@ const resolvers = {
         if (context.user._id.toString() === userId) {
           // Perform the logic to add the project
           const newProject = await Project.create({
-            user: userId,
+            owner: userId,
+            user: context.user._id,
             title,
             genre,
             bpm,
