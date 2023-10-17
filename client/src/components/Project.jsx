@@ -39,7 +39,7 @@ function Project() {
     <>
       <div style={{ padding: '16px', borderBottom: '1px solid #ccc' }}>
         <NavLink
-          to={`${url}/files/${projectDetails.id}`} // Use url here
+          to={`${url}/files/`} // Use url here
           activeClassName="activeLink"
           style={{
             marginRight: '16px',
@@ -89,15 +89,15 @@ function Project() {
         />
         <Route
           path={`${path}/collaborators`} // Add Route for Collaborators
-          component={Collaborators}
+          render={(props) => <Collaborators {...props} projectId={projectDetails.title} />}
         />
         <Route
           path={`${path}/messages`} // Add Route for Messages
-          component={Messages}
+          render={(props) => <Messages {...props} projectId={projectDetails.title} />}
         />
         <Route
           path={`${path}/settings`} // Add Route for Settings
-          render={() => <Settings projectDetails={projectDetails} />}
+          render={(props) => <Settings {...props} projectId={projectDetails.title} />}
         />
       </Switch>
     </>

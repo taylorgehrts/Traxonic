@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Settings() {
+function Settings({ projectId }) {
   return (
     <div>
-      <h1>Settings</h1>
+      <h1 style={{ color: "#FFFFFF" }}>Settings for {projectId}</h1>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Collaborators() {
+function Collaborators({ projectId }) {
   return (
     <div>
-      <h1>Collaborators</h1>
+      <h1 style={{ color: "#FFFFFF" }}>Collaborators on {projectId}</h1>
     </div>
   );
 }
