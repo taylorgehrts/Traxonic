@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { useAuth } from '../components/AuthContext'; // Update the path
+import { useAuth } from '../components/AuthContext'; 
 
 // Import LOGOUT mutation
 import { LOGOUT } from '../utils/mutations';
@@ -35,7 +35,7 @@ function ResponsiveAppBar() {
   const history = useHistory();
   const theme = useTheme();
   const { user, onLogout } = useAuth();
-  const client = useApolloClient(); // Get Apollo Client instance
+  const client = useApolloClient(); 
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -67,7 +67,7 @@ function ResponsiveAppBar() {
       history.push('/');
     } catch (error) {
       console.error('Error during logout:', error);
-      // Handle error as needed
+      
     }
   };
 
@@ -75,7 +75,7 @@ function ResponsiveAppBar() {
     <AppBar position="static" sx={{ boxShadow: theme.shadows[0], backgroundColor: theme.palette.background.paper }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ maxWidth: '100%' }}>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -91,7 +91,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Traxonic
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -132,7 +132,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -149,7 +149,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Traxonic
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
@@ -175,7 +175,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Taylor Gehrts" src="/broken-image.jpg" />
+                <Avatar alt="Taylor Gehrts"  />
               </IconButton>
             </Tooltip>
             <Menu

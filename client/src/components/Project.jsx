@@ -53,7 +53,7 @@ function Project({ handleFileUpload }) {
           style={{
             marginRight: '16px',
             textDecoration: 'none',
-            color: 'inherit',
+            color: 'white',
           }}
         >
           Files
@@ -64,7 +64,7 @@ function Project({ handleFileUpload }) {
           style={{
             marginRight: '16px',
             textDecoration: 'none',
-            color: 'inherit',
+            color: 'white',
           }}
         >
           Collaborators
@@ -75,7 +75,7 @@ function Project({ handleFileUpload }) {
           style={{
             marginRight: '16px',
             textDecoration: 'none',
-            color: 'inherit',
+            color: 'white',
           }}
         >
           Messages
@@ -85,7 +85,7 @@ function Project({ handleFileUpload }) {
           activeClassName="activeLink"
           style={{
             textDecoration: 'none',
-            color: 'inherit',
+            color: 'white',
           }}
         >
           Settings

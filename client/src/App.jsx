@@ -13,9 +13,16 @@ import awsmobile from '../../src/aws-exports';
 Amplify.configure(awsmobile);
 
 function App() {
+  const bodyStyle = {
+    backgroundColor: '#090810',
+    margin: 0,
+    padding: 0,
+    minHeight: '100vh',
+  };
   return (
     <AuthProvider>
       <Router>
+      <div style={bodyStyle}>
         <NavBar />
         <Switch>
           <Route
@@ -30,6 +37,7 @@ function App() {
           <Route path="/connect" component={Connect} />
           {/* Add more routes as needed */}
         </Switch>
+        </div>
       </Router>
     </AuthProvider>
   );

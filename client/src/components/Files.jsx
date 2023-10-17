@@ -9,8 +9,8 @@ function Files() {
 
   return (
     <div>
-      <h1>Files for Project {projectId}</h1>
-      <input type="file" onChange={handleFileUpload} />
+      <h1 style={{ color: "#FFFFFF"}}>Files for Project {projectId}</h1>
+      <input type="file" onChange={handleFileUpload} style={{ color: "#FFFFFF"}} />
     </div>
   );
 }

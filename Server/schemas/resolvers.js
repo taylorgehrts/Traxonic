@@ -13,7 +13,6 @@ const { signToken, signGraphqlToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     findUser: async (_, { id }, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -27,7 +26,6 @@ const resolvers = {
       }
     },
     findByGenre: async (_, { genre }, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -41,7 +39,6 @@ const resolvers = {
       }
     },
     findAllUsers: async (_, __, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -55,7 +52,6 @@ const resolvers = {
       }
     },
     getProjects: async (_, { userId }, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -75,7 +71,7 @@ const resolvers = {
           throw new AuthenticationError("Invalid credentials");
         }
 
-        // Use the appropriate token function based on your needs
+        // Use the appropriate token
         const token = signToken(user); // for Cognito or other purposes
         const graphqlToken = signGraphqlToken(user); // for GraphQL
 
@@ -109,10 +105,6 @@ const resolvers = {
           }
         }
 
-        // Handle other types of errors as needed
-        // ...
-
-        // Throw a generic error to the client
         console.error("Error during login:", error);
         throw new ApolloError(
           "An error occurred during login. Please try again."
@@ -128,17 +120,9 @@ const resolvers = {
           return false;
         }
 
-        // Your logic to revoke or invalidate tokens (if using JWT)
-        // Example: You might store the user's token in a database and mark it as revoked
-
         console.log("Clearing session and cookies");
 
-        // Clear user session (if using sessions)
         req.session.destroy();
-
-        // Clear cookies (if using cookies for session or token storage)
-
-        // Additional logout logic based on your authentication mechanism
 
         console.log("Logout successful");
 
@@ -156,7 +140,7 @@ const resolvers = {
         const user = await User.create(args);
         return user;
       } catch (error) {
-        console.error("Error adding user:", error.message); // Log the specific error message
+        console.error("Error adding user:", error.message);
         throw new ApolloError("Error adding user");
       }
     },
@@ -196,7 +180,6 @@ const resolvers = {
     },
 
     removeUser: async (_, { userId }, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -204,8 +187,8 @@ const resolvers = {
       try {
         // Check if the authenticated user is removing their own account
         if (context.user._id === userId) {
-          // Perform the logic to remove the user (and associated data)
-          // Example: You might want to delete the user, their profile, projects, files, messages, etc.
+          // Perform the logic to remove the user (and associated data)?
+
           await User.findByIdAndRemove(userId);
 
           // Return true to indicate success
@@ -223,7 +206,6 @@ const resolvers = {
     },
 
     addProfile: async (_, { userId, location, bio, image, links }, context) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -307,7 +289,6 @@ const resolvers = {
       { userId, title, genre, bpm, description },
       context
     ) => {
-      // Add authentication check
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
@@ -339,9 +320,40 @@ const resolvers = {
       }
     },
 
-    // Add other mutations for projects, files, collaborators, messages, etc.
+    removeProject: async (_, { projectId }, context) => {
+      // Check if the user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError("Authentication required");
+      }
+
+      try {
+        // Find the project by ID
+        const project = await Project.findById(projectId);
+
+        // Check if the project exists
+        if (!project) {
+          throw new ApolloError("Project not found");
+        }
+
+        // Check if the authenticated user is the owner of the project
+        if (context.user._id.toString() === project.owner.toString()) {
+          // Perform the logic to remove the project
+          await Project.findByIdAndRemove(projectId);
+
+          // Return true to indicate success
+          return true;
+        } else {
+          // If the user is not the owner, throw an error
+          throw new AuthenticationError(
+            "You are not authorized to remove this project"
+          );
+        }
+      } catch (error) {
+        console.error("Error removing project:", error);
+        throw new ApolloError("Error removing project");
+      }
+    },
   },
-  // Add other resolvers for User, Profile, Project, File, Message types
 };
 
 module.exports = resolvers;

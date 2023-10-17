@@ -60,3 +60,10 @@ export const ADD_PROJECT = gql`
     }
   }
 `;
+
+
+export const REMOVE_PROJECT = gql`
+  mutation RemoveProject($projectId: ID) {
+    removeProject(projectId: $projectId)
+  }
+`;
