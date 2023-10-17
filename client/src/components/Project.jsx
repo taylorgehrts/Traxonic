@@ -85,11 +85,11 @@ function Project() {
       <Switch>
         <Route
           path={`${path}/files/`} // Update the path here
-          render={(props) => <Files {...props} projectId={projectDetails.title} />}
+          render={(props) => <Files {...props} projectId={projectDetails.title} realProjectId={projectDetails.id}/>}
         />
         <Route
           path={`${path}/collaborators`} // Add Route for Collaborators
-          render={(props) => <Collaborators {...props} projectId={projectDetails.title} />}
+          render={(props) => <Collaborators {...props} projectId={projectDetails.title}  />}
         />
         <Route
           path={`${path}/messages`} // Add Route for Messages

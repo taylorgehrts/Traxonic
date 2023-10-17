@@ -19,8 +19,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import theme from "../theme";
 
-function Files({ projectId }) {
+function Files({ projectId, realProjectId }) {
   console.log("Project ID in the files.jsx:", projectId);
+  console.log("Real Project ID in the Files.jsx:", realProjectId);
 
   // Sample file data for illustration purposes
   const files = [
@@ -92,7 +93,7 @@ function Files({ projectId }) {
               style={{ marginLeft: "auto" }}
             >
               Choose File
-              <input type="file" onChange={handleFileUpload} style={{ display: "none" }} />
+              <input type="file" onChange={(event) => handleFileUpload(event, realProjectId)} style={{ display: "none" }} />
             </Button>
           </Box>
 
