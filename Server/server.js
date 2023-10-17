@@ -22,6 +22,29 @@ const startApolloServer = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
+
+  const Project = require('./models/Project'); // Replace with the actual path
+  // Set up a route for handling project details
+  app.get('/api/projects/:projectId', async (req, res) => {
+    try {
+      const projectId = req.params.projectId;
+      
+      // Fetch project details from the database based on projectId
+      const projectDetails = await Project.findById(projectId);
+  
+      if (!projectDetails) {
+        // If project is not found, return a 404 status
+        return res.status(404).json({ error: 'Project not found' });
+      }
+  
+      // Send the project details as JSON response
+      res.json(projectDetails);
+    } catch (error) {
+      console.error('Error fetching project details:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`Connected to MongoDB`);

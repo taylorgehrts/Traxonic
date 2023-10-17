@@ -1,3 +1,4 @@
+// Import the necessary components
 import React, { useEffect, useState } from 'react';
 import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Files from './Files';
@@ -5,50 +6,40 @@ import Collaborators from './Collaborators.jsx';
 import Messages from './Messages';
 import Settings from './Settings';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { FIND_PROJECT_BY_ID } from '../utils/queries'; // Replace with the actual path
 
-function Project({ handleFileUpload }) {
-  const { path } = useRouteMatch();
+function Project() {
+  const { path, url } = useRouteMatch(); // Destructure url
   const { projectId } = useParams();
+  console.log("Console log of projectId", projectId);
+
+  // Use the useQuery hook to fetch project details
+  const { loading, error, data } = useQuery(FIND_PROJECT_BY_ID, {
+    variables: { projectId: projectId },
+  });
 
   // State to store project details
   const [projectDetails, setProjectDetails] = useState(null);
 
-  // Placeholder function to fetch project details
-  const fetchProjectDetails = async () => {
-    try {
-      const response = await fetch(`/api/projects/${projectId}`);
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-  
-      // Check if the response is JSON
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const data = await response.json();
-        setProjectDetails(data);
-      } else {
-        // Log the non-JSON response
-        console.error('Non-JSON response:', await response.text());
-      }
-    } catch (error) {
-      console.error('Error fetching project details:', error);
-    }
-  };
-  
-  
-
   useEffect(() => {
-    // Fetch project details when component mounts
-    fetchProjectDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId]); // Fetch details whenever projectId changes
+    // Check if data has been fetched and update state
+    if (data) {
+      setProjectDetails(data.findProjectById);
+    }
+  }, [data]);
+  console.log("Console log of project details", projectDetails);
+
+  // Render loading or error state
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!projectDetails) return <p>No project details available.</p>;
 
   return (
     <>
       <div style={{ padding: '16px', borderBottom: '1px solid #ccc' }}>
         <NavLink
-          to={`${path}/files`}
+          to={`${url}/files/${projectDetails.id}`} // Use url here
           activeClassName="activeLink"
           style={{
             marginRight: '16px',
@@ -59,7 +50,7 @@ function Project({ handleFileUpload }) {
           Files
         </NavLink>
         <NavLink
-          to={`${path}/collaborators`}
+          to={`${url}/collaborators`} // Add NavLink for Collaborators
           activeClassName="activeLink"
           style={{
             marginRight: '16px',
@@ -70,7 +61,7 @@ function Project({ handleFileUpload }) {
           Collaborators
         </NavLink>
         <NavLink
-          to={`${path}/messages`}
+          to={`${url}/messages`} // Add NavLink for Messages
           activeClassName="activeLink"
           style={{
             marginRight: '16px',
@@ -81,7 +72,7 @@ function Project({ handleFileUpload }) {
           Messages
         </NavLink>
         <NavLink
-          to={`${path}/settings`}
+          to={`${url}/settings`} // Add NavLink for Settings
           activeClassName="activeLink"
           style={{
             textDecoration: 'none',
@@ -92,14 +83,20 @@ function Project({ handleFileUpload }) {
         </NavLink>
       </div>
       <Switch>
-      <Route
-  path={`${path}/files`}
-  render={() => <Files  projectId={projectId} />}
-/>
-        <Route path={`${path}/collaborators`} component={Collaborators} />
-        <Route path={`${path}/messages`} component={Messages} />
         <Route
-          path={`${path}/settings`}
+          path={`${path}/files/`} // Update the path here
+          render={(props) => <Files {...props} projectId={projectDetails.title} />}
+        />
+        <Route
+          path={`${path}/collaborators`} // Add Route for Collaborators
+          component={Collaborators}
+        />
+        <Route
+          path={`${path}/messages`} // Add Route for Messages
+          component={Messages}
+        />
+        <Route
+          path={`${path}/settings`} // Add Route for Settings
           render={() => <Settings projectDetails={projectDetails} />}
         />
       </Switch>

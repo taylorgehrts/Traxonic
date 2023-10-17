@@ -1,16 +1,15 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { handleFileUpload } from './FileUtils';  // Update the path accordingly
+import { handleFileUpload } from './FileUtils';
 
-function Files() {
-  const { projectId } = useParams();
-
-  console.log('Project ID:', projectId);
+function Files({ projectId }) {
+  console.log('Project ID in the files.jsx:', projectId);
 
   return (
     <div>
-      <h1 style={{ color: "#FFFFFF"}}>Files for Project {projectId}</h1>
-      <input type="file" onChange={handleFileUpload} style={{ color: "#FFFFFF"}} />
+      {projectId && (
+        <h1 style={{ color: "#FFFFFF" }}>Files for Project {projectId}</h1>
+      )}
+      <input type="file" onChange={handleFileUpload} style={{ color: "#FFFFFF" }} />
     </div>
   );
 }

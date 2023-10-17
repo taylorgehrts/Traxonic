@@ -67,3 +67,5 @@ export const REMOVE_PROJECT = gql`
     removeProject(projectId: $projectId)
   }
 `;
+
+

@@ -60,6 +60,17 @@ const resolvers = {
       const projects = await Project.find({ owner: userId });
       return projects;
     },
+
+    findProjectById: async (_, { projectId }) => {
+      try {
+        const project = await Project.findById(projectId);
+        return project;
+      } catch (error) {
+        console.error('Error finding project by ID:', error);
+        throw new Error('Internal server error');
+      }
+    },
+    
   },
   Mutation: {
     login: async (_, { email, password }) => {

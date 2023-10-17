@@ -25,3 +25,16 @@ export const FIND_USER = gql`
     }
   }
 `;
+export const FIND_PROJECT_BY_ID = gql`
+  query FindProjectById($projectId: ID!) {
+    findProjectById(projectId: $projectId) {
+      id
+      title
+      genre
+      bpm
+      description
+      ownerUsername
+      
+    }
+  }
+`;
