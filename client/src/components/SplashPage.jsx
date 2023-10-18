@@ -16,6 +16,26 @@ import SignInForm from "./SignInForm";
 import theme from "../theme"; // Import your theme
 import splashImage from "../assets/digital_music_background_311664.jpg";
 
+const fadeInStyle = {
+  animation: "fadeIn 1.3s ease-in-out forwards",
+  animationDelay: "0.5s",
+  opacity: 0, 
+};
+
+const fadeInStyle2 = {
+  animation: "fadeIn 1.3s ease-in-out forwards",
+  animationDelay: "1.1s",
+  opacity: 0, 
+};
+
+const fadeInStyle3 = {
+  animation: "fadeIn 1.3s ease-in-out forwards",
+  animationDelay: "1.8s",
+  opacity: 0, 
+};
+
+const fadeInKeyframes = `@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`;
+
 const SplashPage = () => {
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
@@ -35,6 +55,9 @@ const SplashPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* Include the styles */}
+      <style>{`${fadeInKeyframes} @-webkit-keyframes ${fadeInKeyframes}`}</style>
+
       <Container
         maxWidth="xl"
         sx={{
@@ -45,8 +68,8 @@ const SplashPage = () => {
       >
         <Container maxWidth="md" sx={{ marginTop: "1rem" }}>
           <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12} md={6}>
-              <Card>
+            <Grid item xs={12} md={7}>
+              <Card sx={{ marginTop: "3rem", ...fadeInStyle }}>
                 <CardContent>
                   <Typography
                     variant="h4"
@@ -63,18 +86,21 @@ const SplashPage = () => {
                     A Music Collaboration App
                   </Typography>
                   <Typography variant="body1" sx={{ color: "#FFFFFF" }}>
-                    "Collaborate seamlessly with musicians worldwide. Share your
+                    Collaborate seamlessly with musicians worldwide. Share your
                     musical concepts, exchange files, and realize your creative
                     vision. Say goodbye to cumbersome email chains and generic
                     platforms. Our platform is designed for musicians, offering
                     a streamlined experience for sharing files and
-                    communication."{" "}
+                    communication.{" "}<br></br><br></br>Unleash your creativity and explore new horizons in music.
+                    Traxonic provides a space where artists connect, ideas flourish,
+                    and music comes to life. Join our vibrant community and be part
+                    of a revolutionary platform dedicated to the art of collaboration.
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Card>
+            <Grid item xs={12} md={5}>
+              <Card sx={{ marginTop: "3rem", ...fadeInStyle2 }}>
                 <CardContent>
                   <Typography
                     variant="h5"
@@ -88,11 +114,11 @@ const SplashPage = () => {
                     color="info"
                     onClick={handleSignUpOpen}
                   >
-                    Sign Up 
+                    Sign Up
                   </Button>
                 </CardContent>
               </Card>
-              <Card sx={{ marginTop: "1rem" }}>
+              <Card sx={{ marginTop: "1rem", ...fadeInStyle3 }}>
                 <CardContent>
                   <Typography
                     variant="h5"

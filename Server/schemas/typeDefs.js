@@ -70,6 +70,7 @@ const typeDefs = gql`
     findByGenre(genre: String): [Project]
     getProjects(userId: ID): [Project]
     findProjectById(projectId: ID): Project 
+    findProfileById(userId: ID!): Profile
   }
   
   type Mutation {

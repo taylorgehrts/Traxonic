@@ -7,13 +7,17 @@ import theme from '../theme';
 import { useAuth } from '../components/AuthContext'; // Update the path
 
 const SignInForm = () => {
-  const { onLogout } = useAuth(); // Use onLogout from the context
+  const { onLogout } = useAuth();
   const [login] = useMutation(LOGIN);
 
   const [loginInput, setLoginInput] = useState({
     email: '',
     password: '',
   });
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,8 +26,6 @@ const SignInForm = () => {
       [name]: value,
     });
   };
-
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSignIn = async () => {
     try {
@@ -38,34 +40,25 @@ const SignInForm = () => {
       console.log('GraphQL data:', data); // Log the entire data object
   
       if (data && data.login) {
-        const { token, user } = data.login; // Updated to access nested token and user
-        console.log('authToken:', token); // Log authToken
+        const { token, user } = data.login;
+        console.log('authToken:', token);
   
         // Store tokens and user ID in localStorage
         localStorage.setItem('authToken', token);
         localStorage.setItem('userId', user.id);
   
-        // Redirect or perform other actions after successful login
+      
+        // Force a page refresh
+        window.location.reload();
       }
   
       // Handle Amplify sign-in result
       console.log('Amplify Sign-in result:', amplifySignInResult);
-  
     } catch (error) {
       console.error('Error logging in:', error);
       // Handle errors
     }
   };
-  
-  
-  
-  
-
-  
-  
-  
-
-  
 
   return (
     <ThemeProvider theme={theme}>

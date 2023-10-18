@@ -12,16 +12,15 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useAuth } from '../components/AuthContext'; 
-
-// Import LOGOUT mutation
+import logo from '../assets/bitmap.png';
 import { LOGOUT } from '../utils/mutations';
 
 const pages = [
   { label: 'Home', path: '/' },
+  { label: 'Profile', path: '/Profile' },
   { label: 'Projects', path: '/projects' },
   { label: 'Connect', path: '/connect' },
   { label: 'Requests', path: '/requests' },
@@ -56,19 +55,15 @@ function ResponsiveAppBar() {
 
   const handleLogout = async () => {
     try {
-      // Call the Apollo Server logout mutation
       await client.mutate({
         mutation: LOGOUT,
       });
 
-      // Call the AWS Amplify logout function
       await onLogout();
 
-      // Programmatically redirect to the home page
       history.push('/');
     } catch (error) {
       console.error('Error during logout:', error);
-      
     }
   };
 
@@ -76,24 +71,21 @@ function ResponsiveAppBar() {
     <AppBar position="static" sx={{ boxShadow: theme.shadows[0], backgroundColor: theme.palette.background.paper }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ maxWidth: '100%' }}>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Traxonic
-          </Typography>
+          <Box sx={{
+            display: { xs: 'none', md: 'flex' },
+            alignItems: 'center',
+            flexGrow: 1,
+          }}>
+            {/* Logo */}
+            <img
+              src={logo}
+              alt="TraxSonic Logo"
+              component={Link}
+              to="/"
+              onClick={handleCloseNavMenu}
+              style={{ maxHeight: '30px', display: 'block' }}
+            />
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -133,43 +125,41 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Traxonic
-          </Typography>
+          <Box sx={{
+            display: { xs: 'flex', md: 'none' },
+            alignItems: 'center',
+            flexGrow: 1,
+          }}>
+            {/* Logo */}
+            <img
+              src={logo}
+              alt="TraxSonic Logo"
+              component={Link}
+              to="/"
+              onClick={handleCloseNavMenu}
+              style={{ maxHeight: '30px', display: 'block' }}
+            />
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.label}
-                  component={Link}
-                  to={page.path}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    mx: 2,
-                    color: location.pathname === page.path ? 'white' : 'gray',
-                    textDecoration: 'none',
-                    display: 'block',
-                  }}
-                >
-                  {page.label}
-                </Button>
-              ))}
+              {user ? (
+                pages.map((page) => (
+                  <Button
+                    key={page.label}
+                    component={Link}
+                    to={page.path}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      mx: 2,
+                      color: location.pathname === page.path ? 'white' : 'gray',
+                      textDecoration: 'none',
+                      display: 'block',
+                    }}
+                  >
+                    {page.label}
+                  </Button>
+                ))
+              ) : null}
             </Box>
           </Box>
 
@@ -209,3 +199,4 @@ function ResponsiveAppBar() {
 }
 
 export default ResponsiveAppBar;
+

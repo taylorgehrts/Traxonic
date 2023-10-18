@@ -61,11 +61,41 @@ export const ADD_PROJECT = gql`
   }
 `;
 
+export const ADD_PROFILE = gql`
+  mutation AddProfile($userId: ID!, $location: String!, $bio: String!, $image: String!, $links: [LinkInput]!) {
+    addProfile(userId: $userId, location: $location, bio: $bio, image: $image, links: $links) {
+      id
+      location
+      bio
+      image
+      links {
+        title
+        url
+      }
+    }
+  }
+`;
 
+export const UPDATE_PROFILE = gql`
+  mutation UpdateProfile($userId: ID!, $location: String!, $bio: String!, $image: String!, $links: [LinkInput]!) {
+    updateProfile(userId: $userId, location: $location, bio: $bio, image: $image, links: $links) {
+      id
+      location
+      bio
+      image
+      links {
+        title
+        url
+      }
+    }
+  }
+`;
 export const REMOVE_PROJECT = gql`
   mutation RemoveProject($projectId: ID) {
     removeProject(projectId: $projectId)
   }
 `;
+
+
 
 

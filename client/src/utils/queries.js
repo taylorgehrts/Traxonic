@@ -38,3 +38,18 @@ export const FIND_PROJECT_BY_ID = gql`
     }
   }
 `;
+
+export const FIND_PROFILE_BY_ID = gql`
+query FindProfileById($userId: ID!) {
+  findProfileById(userId: $userId) {
+    id
+    location
+    bio
+    image
+    links {
+      title
+      url
+    }
+  }
+}
+`;
