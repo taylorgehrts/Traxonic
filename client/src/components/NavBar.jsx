@@ -24,6 +24,7 @@ const pages = [
   { label: 'Home', path: '/' },
   { label: 'Projects', path: '/projects' },
   { label: 'Connect', path: '/connect' },
+  { label: 'Requests', path: '/requests' },
 ];
 
 const settings = ['Profile Settings', 'Account Settings', 'Dashboard', 'Logout'];

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { TextField, Button, ThemeProvider } from "@mui/material";
-import { Auth } from "aws-amplify"; // Import Auth from aws-amplify
+import { Auth } from "aws-amplify";
 import { useMutation } from "@apollo/client";
 import { ADD_USER, VERIFY_USER } from "../utils/mutations";
 import theme from "../theme";
-import { useAuth } from "../components/AuthContext"; // Update the path
+import { useAuth } from "../components/AuthContext";
+import { useHistory } from 'react-router-dom';
 
 const SignUpForm = () => {
-  const { onLogout } = useAuth(); // Use onLogout from the context
+  const history = useHistory();
+  const { onLogout } = useAuth();
   const [addUser] = useMutation(ADD_USER);
-  const [verifyUser] = useMutation(VERIFY_USER); // Use the verification mutation
+  const [verifyUser] = useMutation(VERIFY_USER);
 
+  const [isSignUpClicked, setIsSignUpClicked] = useState(false);
   const [userInput, setUserInput] = useState({
     username: "",
     email: "",
@@ -31,7 +34,6 @@ const SignUpForm = () => {
 
   const handleSignUp = async () => {
     try {
-      // Use both your mutation and Auth.signUp inside Promise.all
       const [addUserResult, signUpResult] = await Promise.all([
         addUser({
           variables: userInput,
@@ -50,10 +52,11 @@ const SignUpForm = () => {
       console.log("User created in your database:", addUserResult);
       console.log("User created in AWS Cognito:", signUpResult);
 
-      // Prompt user to enter verification code
       alert(
         "A verification code has been sent to your email. Please enter the code to complete registration."
       );
+
+      setIsSignUpClicked(true);
     } catch (error) {
       console.error("Error creating user:", error);
 
@@ -70,11 +73,11 @@ const SignUpForm = () => {
 
   const handleVerify = async () => {
     try {
-      // Use Auth.confirmSignUp to send the verification code to AWS Cognito
       await Auth.confirmSignUp(userInput.email, verificationCode);
-
-      // Verification successful
       alert("Registration successful!");
+  
+      // Open the sign-in modal
+      
     } catch (error) {
       console.error("Error verifying user:", error);
       alert(
@@ -85,10 +88,7 @@ const SignUpForm = () => {
 
   const handleResendCode = async () => {
     try {
-      // Use Auth.resendSignUp to resend the verification code
       await Auth.resendSignUp(userInput.email);
-
-      // Verification code resent successfully
       alert("Verification code resent successfully. Please check your email.");
     } catch (error) {
       console.error("Error resending verification code:", error);
@@ -180,27 +180,36 @@ const SignUpForm = () => {
             },
           }}
         />
-        <TextField
-          label="Verification Code"
-          name="verificationCode"
-          value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value)}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            style: { color: theme.palette.text.placeholder },
-          }}
-        />
-        <Button variant="contained" color="info" onClick={handleVerify}>
-          Verify
-        </Button>
 
-        <Button variant="contained" color="info" onClick={handleSignUp}>
-          Sign Up
-        </Button>
-        <Button variant="contained" color="info" onClick={handleResendCode}>
-          Resend Verification Code
-        </Button>
+        {/* Verification Code Section */}
+        {isSignUpClicked && (
+          <div>
+            <TextField
+              label="Verification Code"
+              name="verificationCode"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                style: { color: theme.palette.text.placeholder },
+              }}
+            />
+            <Button variant="contained" color="info" onClick={handleVerify}>
+              Verify
+            </Button>
+            <Button variant="contained" color="info" onClick={handleResendCode}>
+              Resend Verification Code
+            </Button>
+          </div>
+        )}
+
+        {/* Conditional rendering for Sign In button */}
+        {!isSignUpClicked && (
+          <Button variant="contained" color="info" onClick={handleSignUp}>
+            Sign Up
+          </Button>
+        )}
       </form>
     </ThemeProvider>
   );
