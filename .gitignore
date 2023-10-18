@@ -6,7 +6,7 @@ node_modules/
 debug.log
 # macOS
 .DS_Store
-.env
+
 adminSeeds.js
 
 #amplify-do-not-edit-begin
