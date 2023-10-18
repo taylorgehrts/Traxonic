@@ -37,12 +37,13 @@ function Project() {
 
   return (
     <>
-      <div style={{ padding: "16px", borderBottom: "1px solid #ccc" }}>
+      <div style={{ padding: "16px", marginLeft: "20px", marginRight: "20px", borderBottom: "1px solid #ccc" }}>
         <NavLink
           to={`${url}/files/`} // Use url here
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
+            margin: "16px",
             textDecoration: "none",
             color: "white",
           }}
