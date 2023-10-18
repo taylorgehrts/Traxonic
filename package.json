@@ -16,6 +16,9 @@
     "url": "https://github.com/taylorgehrts/Traxonic/issues"
   },
   "homepage": "https://github.com/taylorgehrts/Traxonic#readme",
+  "engines": {
+    "node": "16.x" 
+  },
   "dependencies": {
     "@aws-amplify/ui-react": "^5.3.1",
     "apollo-server-express": "^3.12.1",
