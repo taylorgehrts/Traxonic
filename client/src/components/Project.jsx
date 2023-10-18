@@ -1,13 +1,13 @@
 // Import the necessary components
-import React, { useEffect, useState } from 'react';
-import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
-import Files from './Files';
-import Collaborators from './Collaborators.jsx';
-import Messages from './Messages';
-import Settings from './Settings';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { FIND_PROJECT_BY_ID } from '../utils/queries'; // Replace with the actual path
+import React, { useEffect, useState } from "react";
+import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
+import Files from "./Files";
+import Collaborators from "./Collaborators.jsx";
+import Messages from "./Messages";
+import Settings from "./Settings";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { FIND_PROJECT_BY_ID } from "../utils/queries"; // Replace with the actual path
 
 function Project() {
   const { path, url } = useRouteMatch(); // Destructure url
@@ -37,14 +37,17 @@ function Project() {
 
   return (
     <>
-      <div style={{ padding: '16px', borderBottom: '1px solid #ccc' }}>
+      <div style={{ padding: "16px", borderBottom: "1px solid #ccc" }}>
         <NavLink
           to={`${url}/files/`} // Use url here
           activeClassName="activeLink"
           style={{
-            marginRight: '16px',
-            textDecoration: 'none',
-            color: 'white',
+            marginRight: "16px",
+            textDecoration: "none",
+            color: "white",
+          }}
+          activeStyle={{
+            color: 'gray', // Your desired gray color
           }}
         >
           Files
@@ -53,9 +56,12 @@ function Project() {
           to={`${url}/collaborators`} // Add NavLink for Collaborators
           activeClassName="activeLink"
           style={{
-            marginRight: '16px',
-            textDecoration: 'none',
-            color: 'white',
+            marginRight: "16px",
+            textDecoration: "none",
+            color: "white",
+          }}
+          activeStyle={{
+            color: 'gray', // Your desired gray color
           }}
         >
           Collaborators
@@ -64,9 +70,12 @@ function Project() {
           to={`${url}/messages`} // Add NavLink for Messages
           activeClassName="activeLink"
           style={{
-            marginRight: '16px',
-            textDecoration: 'none',
-            color: 'white',
+            marginRight: "16px",
+            textDecoration: "none",
+            color: "white",
+          }}
+          activeStyle={{
+            color: 'gray', // Your desired gray color
           }}
         >
           Messages
@@ -75,8 +84,11 @@ function Project() {
           to={`${url}/settings`} // Add NavLink for Settings
           activeClassName="activeLink"
           style={{
-            textDecoration: 'none',
-            color: 'white',
+            textDecoration: "none",
+            color: "white",
+          }}
+          activeStyle={{
+            color: 'gray', // Your desired gray color
           }}
         >
           Settings
@@ -84,20 +96,42 @@ function Project() {
       </div>
       <Switch>
         <Route
+          exact
           path={`${path}/files/`} // Update the path here
-          render={(props) => <Files {...props} projectId={projectDetails.title} realProjectId={projectDetails.id}/>}
+          render={(props) => (
+            <Files
+              {...props}
+              projectId={projectDetails.title}
+              realProjectId={projectDetails.id}
+            />
+          )}
         />
         <Route
           path={`${path}/collaborators`} // Add Route for Collaborators
-          render={(props) => <Collaborators {...props} projectId={projectDetails.title}  />}
+          render={(props) => (
+            <Collaborators {...props} projectId={projectDetails.title} />
+          )}
         />
         <Route
           path={`${path}/messages`} // Add Route for Messages
-          render={(props) => <Messages {...props} projectId={projectDetails.title} />}
+          render={(props) => (
+            <Messages {...props} projectId={projectDetails.title} />
+          )}
         />
         <Route
           path={`${path}/settings`} // Add Route for Settings
-          render={(props) => <Settings {...props} projectId={projectDetails.title} />}
+          render={(props) => (
+            <Settings {...props} projectId={projectDetails.title} />
+          )}
+        />
+        <Route
+          render={(props) => (
+            <Files
+              {...props}
+              projectId={projectDetails.title}
+              realProjectId={projectDetails.id}
+            />
+          )}
         />
       </Switch>
     </>

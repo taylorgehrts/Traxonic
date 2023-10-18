@@ -76,7 +76,7 @@ const SignUpForm = () => {
       await Auth.confirmSignUp(userInput.email, verificationCode);
       alert("Registration successful!");
   
-      // Open the sign-in modal
+      
       
     } catch (error) {
       console.error("Error verifying user:", error);
