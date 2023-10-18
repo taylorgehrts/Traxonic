@@ -4,7 +4,8 @@
   "description": "Music-Collab-and-file-sharing-app",
   "main": "server/server.js",
   "scripts": {
-    "start": "node Server/server.js"
+    "start": "node Server/server.js",
+    "postinstall": "npm install --prefix server"
   },
   "repository": {
     "type": "git",
