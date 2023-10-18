@@ -12,7 +12,7 @@ import { AuthProvider } from './components/AuthContext'; // Update the path
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'https://secure-basin-55131.herokuapp.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
