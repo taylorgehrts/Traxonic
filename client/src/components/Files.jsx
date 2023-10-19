@@ -239,7 +239,7 @@ function Files({ projectId, realProjectId }) {
               component="label"
               style={{ marginLeft: "auto" }}
             >
-              Choose File
+              Upload File
               <input
                 type="file"
                 onChange={async (event) => {
