@@ -60,13 +60,13 @@ const Collaborators = ({ projectId }) => {
           }}
         />
 
-        {/* Text below "Collaborators on Project {projectId}" */}
+        
         <Typography variant="body1" style={{ color: theme.palette.text.primary, marginBottom: '1rem' }}>
           Coming soon, you will be able to search for other users and invite them to collaborate on your projects.
           This will grant them access to your projects, allowing the free flow of musical ideas.
         </Typography>
 
-        {/* Add icon */}
+        
         <IconButton
           color="info"
           aria-label="add collaborator"

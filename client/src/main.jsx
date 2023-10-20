@@ -16,7 +16,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // });
 
 const httpLink = createHttpLink({
-  uri: 'https://secure-basin-55131.herokuapp.com/graphql',
+  uri: '/graphql', // set for deploy
 });
 
 const authLink = setContext((_, { headers }) => {

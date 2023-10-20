@@ -7,7 +7,7 @@ import ProjectsPage from './components/ProjectsPage';
 import Project from './components/Project';
 import Requests from './components/Requests';
 import ProfilePage from './components/ProfilePage';
-import { AuthProvider, useAuth } from './components/AuthContext'; // Update this path
+import { AuthProvider, useAuth } from './components/AuthContext'; 
 import { Amplify } from 'aws-amplify';
 import awsmobile from '../../src/aws-exports';
 

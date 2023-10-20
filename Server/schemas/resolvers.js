@@ -84,8 +84,7 @@ const resolvers = {
           throw new ApolloError("Profile not found");
         }
     
-        // Optionally, you can populate additional fields if needed
-        // Example: await profile.populate("user").execPopulate();
+        
     
         return profile;
       } catch (error) {
@@ -108,7 +107,7 @@ const resolvers = {
 
         // Use the appropriate token
         const token = signToken(user); // for Cognito or other purposes
-        const graphqlToken = signGraphqlToken(user); // for GraphQL
+        const graphqlToken = signGraphqlToken(user); // for GraphQL unused
 
         return { token, graphqlToken, user };
       } catch (error) {
@@ -165,7 +164,6 @@ const resolvers = {
         return true;
       } catch (error) {
         console.error("Error during logout:", error);
-        // Handle error as needed
         return false;
       }
     },
@@ -222,14 +220,14 @@ const resolvers = {
       try {
         // Check if the authenticated user is removing their own account
         if (context.user._id === userId) {
-          // Perform the logic to remove the user (and associated data)?
+          
 
           await User.findByIdAndRemove(userId);
 
           // Return true to indicate success
           return true;
         } else {
-          // If the user is not removing their own account, throw an error
+          // If the user is not removing their own account, throw error
           throw new AuthenticationError(
             "You are not authorized to remove this user"
           );

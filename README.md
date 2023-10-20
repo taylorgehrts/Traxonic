@@ -50,7 +50,7 @@ To try out Traxsonic locally, follow these steps:
 5. Start the server: `cd server && npm start`
 6. Start the client: `cd client && npm run dev`
 
-To visit the deployed site visit .....
+To visit the deployed site visit https://secure-basin-55131-a178bdac2e9e.herokuapp.com/ (please note that all AWS funtionality like loading, downloading and uploading files is disabled due to security concerns)
 
 ## Usage
 Explore Traxsonic's functionalities:
@@ -69,6 +69,7 @@ AWS Amplify is seamlessly integrated into Traxsonic for secure authentication an
 
 ## Contributors
 - Taylor Gehrts: Project Lead & Full-stack Developer
+- Alexander Lizarraga: Guidance, consultation and deployment assistance 
 
 ## Questions
 For any inquiries or feedback, feel free to reach out:

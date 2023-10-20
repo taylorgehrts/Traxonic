@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import SignUpForm from "./SignupForm";
 import SignInForm from "./SignInForm";
-import theme from "../theme"; // Import your theme
+import theme from "../theme"; // Import theme
 import splashImage from "../assets/digital_music_background_311664.jpg";
 
 const fadeInStyle = {

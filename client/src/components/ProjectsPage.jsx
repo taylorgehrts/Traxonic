@@ -100,20 +100,20 @@ const ProjectsPage = () => {
         variables: { projectId },
       });
 
-      // Handle the result or show a success message
+      
       console.log('Project removed successfully:', result);
 
     } catch (error) {
       console.error('Error removing project:', error);
-      // Handle the error or show an error message
+      
     }
   };
 
   const handleDeleteIconClick = () => {
-    // Handle deletion logic here
+    
     console.log("Selected projects to delete:", selectedProjects);
 
-    // Assuming you have a function to remove projects
+    
     selectedProjects.forEach((projectId) => {
       handleRemoveProject(projectId);
     });

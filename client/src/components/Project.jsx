@@ -1,4 +1,3 @@
-// Import the necessary components
 import React, { useEffect, useState } from "react";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import Files from "./Files";
@@ -7,14 +6,14 @@ import Messages from "./Messages";
 import Settings from "./Settings";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { FIND_PROJECT_BY_ID } from "../utils/queries"; // Replace with the actual path
+import { FIND_PROJECT_BY_ID } from "../utils/queries"; 
 
 function Project() {
-  const { path, url } = useRouteMatch(); // Destructure url
+  const { path, url } = useRouteMatch(); 
   const { projectId } = useParams();
   console.log("Console log of projectId", projectId);
 
-  // Use the useQuery hook to fetch project details
+  // Use the useQuery to fetch project details
   const { loading, error, data } = useQuery(FIND_PROJECT_BY_ID, {
     variables: { projectId: projectId },
   });
@@ -39,7 +38,7 @@ function Project() {
     <>
       <div style={{ padding: "16px", marginLeft: "20px", marginRight: "20px", borderBottom: "1px solid #ccc" }}>
         <NavLink
-          to={`${url}/files/`} // Use url here
+          to={`${url}/files/`} 
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -48,13 +47,13 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', // Your desired gray color
+            color: 'gray', 
           }}
         >
           Files
         </NavLink>
         <NavLink
-          to={`${url}/collaborators`} // Add NavLink for Collaborators
+          to={`${url}/collaborators`} 
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -62,13 +61,13 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', // Your desired gray color
+            color: 'gray', 
           }}
         >
           Collaborators
         </NavLink>
         <NavLink
-          to={`${url}/messages`} // Add NavLink for Messages
+          to={`${url}/messages`} 
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -76,20 +75,20 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', // Your desired gray color
+            color: 'gray', 
           }}
         >
           Messages
         </NavLink>
         <NavLink
-          to={`${url}/settings`} // Add NavLink for Settings
+          to={`${url}/settings`} 
           activeClassName="activeLink"
           style={{
             textDecoration: "none",
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', // Your desired gray color
+            color: 'gray', 
           }}
         >
           Settings
@@ -98,7 +97,7 @@ function Project() {
       <Switch>
         <Route
           exact
-          path={`${path}/files/`} // Update the path here
+          path={`${path}/files/`} // add route for files
           render={(props) => (
             <Files
               {...props}

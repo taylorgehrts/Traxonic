@@ -15,7 +15,7 @@ function Settings({ projectId }) {
   const [description, setDescription] = useState('');
 
   const handleSave = () => {
-    // Handle save logic here (e.g., update project details)
+    
     console.log('Saved changes');
   };
 

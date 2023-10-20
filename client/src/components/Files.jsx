@@ -34,7 +34,7 @@ function Files({ projectId, realProjectId }) {
   const [audioUrl, setAudioUrl] = useState(null);
 
   useEffect(() => {
-    // Cleanup the audio player when the component is unmounted
+    
     return () => {
       if (audioPlayerRef.current) {
         audioPlayerRef.current.pause();
@@ -80,7 +80,7 @@ function Files({ projectId, realProjectId }) {
   };
 
   useEffect(() => {
-    // Cleanup the audio player when the component is unmounted
+  
     return () => {
       audio.pause();
       audio.src = "";
@@ -146,8 +146,7 @@ function Files({ projectId, realProjectId }) {
     try {
       console.log("Selected files to delete:", selectedFiles);
 
-      // Assuming you have a function to remove files
-      // handleRemoveFile function needs to be implemented
+      
       await Promise.all(
         selectedFiles.map(async (fileKey) => {
           await Storage.remove(fileKey); // Remove the file from S3
@@ -169,8 +168,7 @@ function Files({ projectId, realProjectId }) {
     try {
       console.log("Selected files to download:", selectedFiles);
 
-      // Assuming you have a function to download files
-      // handleDownloadFile function needs to be implemented
+      
       const downloadPromises = selectedFiles.map(async (fileKey) => {
         try {
           const fileName = extractFileName(fileKey);
@@ -210,7 +208,7 @@ function Files({ projectId, realProjectId }) {
   // const handleDownloadFile = (downloadUrl) => {
   //   // Implement the logic to handle file download
   //   console.log("Downloading file from:", downloadUrl);
-  //   // You can use window.open(downloadUrl) or other methods to initiate the download
+  
   // };
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -378,7 +376,7 @@ function Files({ projectId, realProjectId }) {
                     />
                   </>
                 )}
-                {/* Add console.log statements here to check values */}
+                
                 {console.log("File size:", file.size)}
                 {console.log("File lastModified:", file.lastModified)}
               </ListItem>

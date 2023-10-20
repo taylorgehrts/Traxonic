@@ -20,13 +20,13 @@ const theme = createTheme({
       },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif', // Change this to your desired font
+    fontFamily: 'Arial, sans-serif', 
   },
   components: {
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          color: "white", // Set the color to white or any other desired color
+          color: "white", // Set the checkbox color to white 
         },
       },
     },

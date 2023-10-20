@@ -30,7 +30,7 @@ const ProfilePage = () => {
   const [links, setLinks] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  // Declare currentProfile here
+  
   const [currentProfile, setCurrentProfile] = useState(null);
 
   const { loading: profileLoading, error: profileError, data: profileData, refetch: refetchProfile } = useQuery(
@@ -42,7 +42,7 @@ const ProfilePage = () => {
   );
 
   useEffect(() => {
-    // Fetch user profile on component mount
+    // Fetch user profile
     const fetchUserProfile = async () => {
       if (user && user.id) {
         try {

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('./User'); // Adjusted import statement for User model
-const Project = require('./Project'); // Adjusted import statement for Project model
+const User = require('./User'); 
+const Project = require('./Project'); 
 
 const { Schema } = mongoose;
 

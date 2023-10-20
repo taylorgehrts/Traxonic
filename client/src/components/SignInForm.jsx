@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import theme from '../theme';
-import { useAuth } from '../components/AuthContext'; // Update the path
+import { useAuth } from '../components/AuthContext'; 
 
 const SignInForm = () => {
   const { onLogout } = useAuth();
@@ -56,7 +56,7 @@ const SignInForm = () => {
       console.log('Amplify Sign-in result:', amplifySignInResult);
     } catch (error) {
       console.error('Error logging in:', error);
-      // Handle errors
+      
     }
   };
 
