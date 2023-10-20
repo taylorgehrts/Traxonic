@@ -61,6 +61,8 @@ Explore Traxsonic's functionalities:
 - Upload, play, and download music files.
 - Share project files securely. (still in development)
 
+![screenshot](./client/src/assets/Screenshot%202023-10-20%20at%2012.23.00%20PM.png)
+
 ## Authentication
 Traxsonic uses JWT for user authentication, providing secure access to the application.
 
