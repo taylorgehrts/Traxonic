@@ -19,19 +19,19 @@ import splashImage from "../assets/digital_music_background_311664.jpg";
 const fadeInStyle = {
   animation: "fadeIn 1.3s ease-in-out forwards",
   animationDelay: "0.5s",
-  opacity: 0, 
+  opacity: 0,
 };
 
 const fadeInStyle2 = {
   animation: "fadeIn 1.3s ease-in-out forwards",
   animationDelay: "1.1s",
-  opacity: 0, 
+  opacity: 0,
 };
 
 const fadeInStyle3 = {
   animation: "fadeIn 1.3s ease-in-out forwards",
   animationDelay: "1.8s",
-  opacity: 0, 
+  opacity: 0,
 };
 
 const fadeInKeyframes = `@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`;
@@ -91,10 +91,12 @@ const SplashPage = () => {
                     vision. Say goodbye to cumbersome email chains and generic
                     platforms. Our platform is designed for musicians, offering
                     a streamlined experience for sharing files and
-                    communication.{" "}<br></br><br></br>Unleash your creativity and explore new horizons in music.
-                    Traxonic provides a space where artists connect, ideas flourish,
-                    and music comes to life. Join our vibrant community and be part
-                    of a revolutionary platform dedicated to the art of collaboration.
+                    communication. <br></br>
+                    <br></br>Unleash your creativity and explore new horizons in
+                    music. Traxonic provides a space where artists connect,
+                    ideas flourish, and music comes to life. Join our vibrant
+                    community and be part of a revolutionary platform dedicated
+                    to the art of collaboration.
                   </Typography>
                 </CardContent>
               </Card>

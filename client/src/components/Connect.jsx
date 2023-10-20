@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   Typography,
@@ -10,17 +10,17 @@ import {
   Divider,
   useTheme,
   IconButton,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const Connect = () => {
   const theme = useTheme();
 
   // Mock data for collaborators
   const collaborators = [
-    { id: 1, name: 'John Doe', instrument: 'Guitar', genre: 'Rock' },
-    { id: 2, name: 'Jane Smith', instrument: 'Piano', genre: 'Classical' },
-    { id: 3, name: 'Bob Johnson', instrument: 'Drums', genre: 'Pop' },
+    { id: 1, name: "John Doe", instrument: "Guitar", genre: "Rock" },
+    { id: 2, name: "Jane Smith", instrument: "Piano", genre: "Classical" },
+    { id: 3, name: "Bob Johnson", instrument: "Drums", genre: "Pop" },
   ];
 
   // Track selected collaborators
@@ -43,8 +43,11 @@ const Connect = () => {
       maxWidth="xl"
       sx={{ background: "#090810", marginTop: "0rem", paddingTop: "2rem" }}
     >
-      <Container maxWidth="md" sx={{ background: "#090810", padding: '2rem' }}>
-        <Typography variant="h4" style={{ color: theme.palette.text.primary, marginBottom: '1rem' }}>
+      <Container maxWidth="md" sx={{ background: "#090810", padding: "2rem" }}>
+        <Typography
+          variant="h4"
+          style={{ color: theme.palette.text.primary, marginBottom: "1rem" }}
+        >
           Find Collaborators
         </Typography>
 
@@ -60,17 +63,19 @@ const Connect = () => {
           }}
         />
 
-        
-        <Typography variant="body1" style={{ color: theme.palette.text.primary, marginBottom: '1rem' }}>
-          Coming soon, you will be able to search for other users and invite them to collaborate on your projects.
-          This will grant them access to your projects, allowing the free flow of musical ideas.
+        <Typography
+          variant="body1"
+          style={{ color: theme.palette.text.primary, marginBottom: "1rem" }}
+        >
+          Coming soon, you will be able to search for other users and invite
+          them to collaborate on your projects. This will grant them access to
+          your projects, allowing the free flow of musical ideas.
         </Typography>
 
-        
         <IconButton
           color="info"
           aria-label="add collaborator"
-          style={{ marginBottom: '1rem' }}
+          style={{ marginBottom: "1rem" }}
         >
           <AddIcon />
         </IconButton>
@@ -83,21 +88,25 @@ const Connect = () => {
                 alignItems="flex-start"
                 sx={{
                   background: theme.palette.background.paper,
-                  marginBottom: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
+                  marginBottom: "8px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <Checkbox
                   color="default"
-                  style={{ marginRight: '8px' }}
+                  style={{ marginRight: "8px" }}
                   checked={selectedCollaborators.includes(collaborator.id)}
                   onChange={() => handleCheckboxChange(collaborator.id)}
                 />
                 <ListItemText
                   primary={collaborator.name}
                   secondary={`Instrument: ${collaborator.instrument}, Genre: ${collaborator.genre}`}
-                  sx={{ color: theme.palette.text.primary, flex: 1, cursor: 'pointer' }}
+                  sx={{
+                    color: theme.palette.text.primary,
+                    flex: 1,
+                    cursor: "pointer",
+                  }}
                 />
               </ListItem>
               <Divider />
@@ -110,4 +119,3 @@ const Connect = () => {
 };
 
 export default Connect;
-

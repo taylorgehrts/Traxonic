@@ -6,10 +6,10 @@ import Messages from "./Messages";
 import Settings from "./Settings";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { FIND_PROJECT_BY_ID } from "../utils/queries"; 
+import { FIND_PROJECT_BY_ID } from "../utils/queries";
 
 function Project() {
-  const { path, url } = useRouteMatch(); 
+  const { path, url } = useRouteMatch();
   const { projectId } = useParams();
   console.log("Console log of projectId", projectId);
 
@@ -36,9 +36,16 @@ function Project() {
 
   return (
     <>
-      <div style={{ padding: "16px", marginLeft: "20px", marginRight: "20px", borderBottom: "1px solid #ccc" }}>
+      <div
+        style={{
+          padding: "16px",
+          marginLeft: "20px",
+          marginRight: "20px",
+          borderBottom: "1px solid #ccc",
+        }}
+      >
         <NavLink
-          to={`${url}/files/`} 
+          to={`${url}/files/`}
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -47,13 +54,13 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', 
+            color: "gray",
           }}
         >
           Files
         </NavLink>
         <NavLink
-          to={`${url}/collaborators`} 
+          to={`${url}/collaborators`}
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -61,13 +68,13 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', 
+            color: "gray",
           }}
         >
           Collaborators
         </NavLink>
         <NavLink
-          to={`${url}/messages`} 
+          to={`${url}/messages`}
           activeClassName="activeLink"
           style={{
             marginRight: "16px",
@@ -75,20 +82,20 @@ function Project() {
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', 
+            color: "gray",
           }}
         >
           Messages
         </NavLink>
         <NavLink
-          to={`${url}/settings`} 
+          to={`${url}/settings`}
           activeClassName="activeLink"
           style={{
             textDecoration: "none",
             color: "white",
           }}
           activeStyle={{
-            color: 'gray', 
+            color: "gray",
           }}
         >
           Settings

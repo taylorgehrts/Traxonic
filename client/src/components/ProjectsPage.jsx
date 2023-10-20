@@ -20,8 +20,8 @@ import { ADD_PROJECT, REMOVE_PROJECT } from "../utils/mutations";
 import { GET_PROJECTS, FIND_USER } from "../utils/queries";
 import theme from "../theme";
 import { useHistory } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import DeleteIcon from "@mui/icons-material/Delete";
+import ListItemIcon from "@mui/material/ListItemIcon";
 
 const ProjectsPage = () => {
   const history = useHistory();
@@ -32,10 +32,13 @@ const ProjectsPage = () => {
     variables: { userId },
   });
 
-  const { loading: userLoading, error: userError, data: userData } =
-    useQuery(FIND_USER, {
-      variables: { id: userId },
-    });
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(FIND_USER, {
+    variables: { id: userId },
+  });
 
   const projects = data ? data.getProjects : [];
   const user = userData ? userData.findUser : null;
@@ -100,20 +103,15 @@ const ProjectsPage = () => {
         variables: { projectId },
       });
 
-      
-      console.log('Project removed successfully:', result);
-
+      console.log("Project removed successfully:", result);
     } catch (error) {
-      console.error('Error removing project:', error);
-      
+      console.error("Error removing project:", error);
     }
   };
 
   const handleDeleteIconClick = () => {
-    
     console.log("Selected projects to delete:", selectedProjects);
 
-    
     selectedProjects.forEach((projectId) => {
       handleRemoveProject(projectId);
     });
@@ -136,7 +134,10 @@ const ProjectsPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="xl" sx={{ background: "#090810", marginTop: "0rem", paddingTop: "2rem" }}>
+      <Container
+        maxWidth="xl"
+        sx={{ background: "#090810", marginTop: "0rem", paddingTop: "2rem" }}
+      >
         <Container maxWidth="md">
           <Box
             style={{
@@ -174,7 +175,11 @@ const ProjectsPage = () => {
           >
             {isSmallScreen && (
               <ListItemIcon
-                style={{ color: "#FFFFFF", cursor: "pointer", marginRight: "-18px" }}
+                style={{
+                  color: "#FFFFFF",
+                  cursor: "pointer",
+                  marginRight: "-18px",
+                }}
                 onClick={handleDeleteIconClick}
               >
                 <DeleteIcon />
@@ -183,11 +188,24 @@ const ProjectsPage = () => {
             <ListItemText primary="Title" sx={{ color: "#FFFFFF", flex: 1 }} />
             {!isSmallScreen && (
               <>
-                <ListItemText primary="Genre" sx={{ color: "#FFFFFF", flex: 1 }} />
-                <ListItemText primary="BPM" sx={{ color: "#FFFFFF", flex: 1 }} />
-                <ListItemText primary="Owner" sx={{ color: "#FFFFFF", flex: 1 }} />
+                <ListItemText
+                  primary="Genre"
+                  sx={{ color: "#FFFFFF", flex: 1 }}
+                />
+                <ListItemText
+                  primary="BPM"
+                  sx={{ color: "#FFFFFF", flex: 1 }}
+                />
+                <ListItemText
+                  primary="Owner"
+                  sx={{ color: "#FFFFFF", flex: 1 }}
+                />
                 <ListItemIcon
-                  style={{ color: "#FFFFFF", cursor: "pointer", marginRight: "-18px" }}
+                  style={{
+                    color: "#FFFFFF",
+                    cursor: "pointer",
+                    marginRight: "-18px",
+                  }}
                   onClick={handleDeleteIconClick}
                 >
                   <DeleteIcon />
@@ -224,8 +242,14 @@ const ProjectsPage = () => {
                   />
                   {!isSmallScreen && (
                     <>
-                      <ListItemText primary={project.genre} sx={{ color: "#FFFFFF", flex: 1 }} />
-                      <ListItemText primary={project.bpm} sx={{ color: "#FFFFFF", flex: 1 }} />
+                      <ListItemText
+                        primary={project.genre}
+                        sx={{ color: "#FFFFFF", flex: 1 }}
+                      />
+                      <ListItemText
+                        primary={project.bpm}
+                        sx={{ color: "#FFFFFF", flex: 1 }}
+                      />
                       <ListItemText
                         primary={user ? user.username : "Unknown"}
                         sx={{ color: "#FFFFFF", flex: 1 }}

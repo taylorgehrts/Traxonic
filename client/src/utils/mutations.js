@@ -1,5 +1,4 @@
-import { gql } from '@apollo/client';
-
+import { gql } from "@apollo/client";
 
 export const ADD_USER = gql`
   mutation AddUser(
@@ -9,7 +8,13 @@ export const ADD_USER = gql`
     $email: String!
     $password: String!
   ) {
-    addUser(username: $username, first: $first, last: $last, email: $email, password: $password) {
+    addUser(
+      username: $username
+      first: $first
+      last: $last
+      email: $email
+      password: $password
+    ) {
       id
       username
       first
@@ -27,7 +32,6 @@ export const LOGIN = gql`
       user {
         id
         username
-        
       }
     }
   }
@@ -47,23 +51,46 @@ export const VERIFY_USER = gql`
   }
 `;
 
-
 export const ADD_PROJECT = gql`
-  mutation AddProject($userId: ID, $title: String, $genre: String, $bpm: Int, $description: String) {
-    addProject(userId: $userId, title: $title, genre: $genre, bpm: $bpm, description: $description) {
+  mutation AddProject(
+    $userId: ID
+    $title: String
+    $genre: String
+    $bpm: Int
+    $description: String
+  ) {
+    addProject(
+      userId: $userId
+      title: $title
+      genre: $genre
+      bpm: $bpm
+      description: $description
+    ) {
       id
       title
       genre
       bpm
       description
-      ownerUsername  
+      ownerUsername
     }
   }
 `;
 
 export const ADD_PROFILE = gql`
-  mutation AddProfile($userId: ID!, $location: String!, $bio: String!, $image: String!, $links: [LinkInput]!) {
-    addProfile(userId: $userId, location: $location, bio: $bio, image: $image, links: $links) {
+  mutation AddProfile(
+    $userId: ID!
+    $location: String!
+    $bio: String!
+    $image: String!
+    $links: [LinkInput]!
+  ) {
+    addProfile(
+      userId: $userId
+      location: $location
+      bio: $bio
+      image: $image
+      links: $links
+    ) {
       id
       location
       bio
@@ -77,8 +104,20 @@ export const ADD_PROFILE = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation UpdateProfile($userId: ID!, $location: String!, $bio: String!, $image: String!, $links: [LinkInput]!) {
-    updateProfile(userId: $userId, location: $location, bio: $bio, image: $image, links: $links) {
+  mutation UpdateProfile(
+    $userId: ID!
+    $location: String!
+    $bio: String!
+    $image: String!
+    $links: [LinkInput]!
+  ) {
+    updateProfile(
+      userId: $userId
+      location: $location
+      bio: $bio
+      image: $image
+      links: $links
+    ) {
       id
       location
       bio
@@ -95,7 +134,3 @@ export const REMOVE_PROJECT = gql`
     removeProject(projectId: $projectId)
   }
 `;
-
-
-
-

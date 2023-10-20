@@ -1,25 +1,25 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import SplashPage from './components/SplashPage';
-import Connect from './components/Connect';
-import ProjectsPage from './components/ProjectsPage';
-import Project from './components/Project';
-import Requests from './components/Requests';
-import ProfilePage from './components/ProfilePage';
-import { AuthProvider, useAuth } from './components/AuthContext'; 
-import { Amplify } from 'aws-amplify';
-import awsmobile from '../../src/aws-exports';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import SplashPage from "./components/SplashPage";
+import Connect from "./components/Connect";
+import ProjectsPage from "./components/ProjectsPage";
+import Project from "./components/Project";
+import Requests from "./components/Requests";
+import ProfilePage from "./components/ProfilePage";
+import { AuthProvider, useAuth } from "./components/AuthContext";
+import { Amplify } from "aws-amplify";
+import awsmobile from "../../src/aws-exports";
 
 // Initialize Amplify
 Amplify.configure(awsmobile);
 
 function App() {
   const bodyStyle = {
-    backgroundColor: '#090810',
+    backgroundColor: "#090810",
     margin: 0,
     padding: 0,
-    minHeight: '100vh',
+    minHeight: "100vh",
   };
   const { user } = useAuth(); // Access user from the context
 
@@ -29,13 +29,7 @@ function App() {
         <div style={bodyStyle}>
           <NavBar />
           <Switch>
-            <Route
-              path="/"
-              exact
-              render={() => (
-                <SplashPage />
-              )}
-            />
+            <Route path="/" exact render={() => <SplashPage />} />
             {user ? (
               <>
                 <Route path="/projects" exact component={ProjectsPage} />

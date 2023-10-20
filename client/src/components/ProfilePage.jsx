@@ -18,7 +18,11 @@ const ProfilePage = () => {
   const userId = localStorage.getItem("userId");
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { loading: userLoading, error: userError, data: userData } = useQuery(FIND_USER, {
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(FIND_USER, {
     variables: { id: userId },
   });
 
@@ -30,16 +34,17 @@ const ProfilePage = () => {
   const [links, setLinks] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  
   const [currentProfile, setCurrentProfile] = useState(null);
 
-  const { loading: profileLoading, error: profileError, data: profileData, refetch: refetchProfile } = useQuery(
-    FIND_PROFILE_BY_ID,
-    {
-      variables: { userId },
-      skip: !openModal || userLoading || !user || !user.id,
-    }
-  );
+  const {
+    loading: profileLoading,
+    error: profileError,
+    data: profileData,
+    refetch: refetchProfile,
+  } = useQuery(FIND_PROFILE_BY_ID, {
+    variables: { userId },
+    skip: !openModal || userLoading || !user || !user.id,
+  });
 
   useEffect(() => {
     // Fetch user profile
@@ -150,16 +155,36 @@ const ProfilePage = () => {
   console.log("Current Profile:", currentProfile);
 
   return (
-    <Container maxWidth="md" style={{ marginTop: "2rem", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+    <Container
+      maxWidth="md"
+      style={{
+        marginTop: "2rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+      }}
+    >
       {user && (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", alignItems: "center", marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto 1fr",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <div>
               {currentProfile && currentProfile.image && (
                 <img
                   src={currentProfile.image}
                   alt={`${user.username}'s profile`}
-                  style={{ width: "200px", height: "200px", borderRadius: "50%", marginRight: "1rem" }}
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    borderRadius: "50%",
+                    marginRight: "1rem",
+                  }}
                 />
               )}
             </div>
@@ -171,10 +196,16 @@ const ProfilePage = () => {
           </div>
           {currentProfile && (
             <>
-              <Typography variant="h5" style={{ color: "#FFFFFF", marginBottom: "1rem" }}>
+              <Typography
+                variant="h5"
+                style={{ color: "#FFFFFF", marginBottom: "1rem" }}
+              >
                 {currentProfile.location}
               </Typography>
-              <Typography variant="body1" style={{ color: "#FFFFFF", marginBottom: "1rem" }}>
+              <Typography
+                variant="body1"
+                style={{ color: "#FFFFFF", marginBottom: "1rem" }}
+              >
                 <strong>Bio:</strong> {currentProfile.bio}
               </Typography>
             </>
@@ -202,7 +233,7 @@ const ProfilePage = () => {
           </div>
         </>
       )}
-  
+
       <Modal open={openModal} onClose={handleCloseModal}>
         <Paper
           sx={{

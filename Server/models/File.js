@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -16,7 +16,6 @@ const fileSchema = new Schema({
   },
 });
 
-const File = mongoose.model('File', fileSchema);
+const File = mongoose.model("File", fileSchema);
 
 module.exports = File;
-

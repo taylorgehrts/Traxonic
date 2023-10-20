@@ -1,16 +1,16 @@
 const jwt = require("jsonwebtoken");
 
-const secret = process.env.JWT_SECRET || 'mysecretsshhhhh';
-const expiration = process.env.JWT_EXPIRATION || '2h';
+const secret = process.env.JWT_SECRET || "mysecretsshhhhh";
+const expiration = process.env.JWT_EXPIRATION || "2h";
 
 module.exports = {
   authMiddleware: function ({ req, res }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
     if (req.headers.authorization) {
-      console.log('Authorization header:', req.headers.authorization); // Add this line for logging
+      console.log("Authorization header:", req.headers.authorization); 
 
-      token = token.split(' ').pop().trim();
+      token = token.split(" ").pop().trim();
     }
 
     if (!token) {
@@ -21,7 +21,7 @@ module.exports = {
       const { data } = jwt.verify(token, secret);
       req.user = data;
     } catch (error) {
-      console.log('Invalid token');
+      console.log("Invalid token");
     }
 
     return { req, res, user: req.user };
@@ -32,7 +32,7 @@ module.exports = {
   },
   signGraphqlToken: function ({ username, email, _id }) {
     // Function to sign a GraphQL-specific token
-    const payload = { username, email, _id, scope: 'graphql' }; // Add a scope to differentiate from Cognito token
+    const payload = { username, email, _id, scope: "graphql" }; // Add a scope to differentiate from Cognito token
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };

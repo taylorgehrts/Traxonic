@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Collaborator = require('./Collaborator');
-const File = require('./File'); 
-const Message = require('./Message'); 
+const mongoose = require("mongoose");
+const Collaborator = require("./Collaborator");
+const File = require("./File");
+const Message = require("./Message");
 
 const { Schema } = mongoose;
 
@@ -16,19 +16,19 @@ const projectSchema = new Schema({
   image: String,
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   files: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'File',
+      ref: "File",
     },
   ],
   collaborators: [
     {
       collaborator: {
         type: Schema.Types.ObjectId,
-        ref: 'Collaborator',
+        ref: "Collaborator",
       },
       role: String, //to store the role of each collaborator in this project later
     },
@@ -36,18 +36,18 @@ const projectSchema = new Schema({
   messages: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Message',
+      ref: "Message",
     },
   ],
 });
 
-projectSchema.virtual('ownerUsername', {
-  ref: 'User',
-  localField: 'owner',
-  foreignField: '_id',
+projectSchema.virtual("ownerUsername", {
+  ref: "User",
+  localField: "owner",
+  foreignField: "_id",
   justOne: true,
 });
 
-const Project = mongoose.model('Project', projectSchema);
+const Project = mongoose.model("Project", projectSchema);
 
 module.exports = Project;

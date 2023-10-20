@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
-const User = require('./User'); 
-const Project = require('./Project'); 
+const mongoose = require("mongoose");
+const User = require("./User");
+const Project = require("./Project");
 
 const { Schema } = mongoose;
 
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   projects: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Project',
+      ref: "Project",
     },
   ],
   location: String,
@@ -26,6 +26,6 @@ const profileSchema = new Schema({
   ],
 });
 
-const Profile = mongoose.model('Profile', profileSchema);
+const Profile = mongoose.model("Profile", profileSchema);
 
 module.exports = Profile;

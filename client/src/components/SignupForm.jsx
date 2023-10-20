@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER, VERIFY_USER } from "../utils/mutations";
 import theme from "../theme";
 import { useAuth } from "../components/AuthContext";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const SignUpForm = () => {
   const history = useHistory();
@@ -75,9 +75,6 @@ const SignUpForm = () => {
     try {
       await Auth.confirmSignUp(userInput.email, verificationCode);
       alert("Registration successful!");
-  
-      
-      
     } catch (error) {
       console.error("Error verifying user:", error);
       alert(

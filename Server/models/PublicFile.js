@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const publicFileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   title: String,
   duration: Number,
@@ -17,6 +17,6 @@ const publicFileSchema = new Schema({
   },
 });
 
-const PublicFile = mongoose.model('PublicFile', publicFileSchema);
+const PublicFile = mongoose.model("PublicFile", publicFileSchema);
 
 module.exports = PublicFile;

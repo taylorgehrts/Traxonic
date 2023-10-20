@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const bcrypt = require('bcrypt');
-
+const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-
   isAdmin: {
     type: Boolean,
     default: false,
@@ -36,13 +34,13 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: 10,  
+    minlength: 10,
   },
 });
 
 // hash user password
-userSchema.pre('save', async function (next) {
-  if (this.isNew || this.isModified('password')) {
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
@@ -55,6 +53,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

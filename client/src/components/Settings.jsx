@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Typography,
   TextField,
   Button,
   useTheme,
-} from '@mui/material';
+} from "@mui/material";
 
 function Settings({ projectId }) {
   const theme = useTheme();
-  const [title, setTitle] = useState('');
-  const [genre, setGenre] = useState('');
-  const [bpm, setBpm] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [genre, setGenre] = useState("");
+  const [bpm, setBpm] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSave = () => {
-    
-    console.log('Saved changes');
+    console.log("Saved changes");
   };
 
   return (
@@ -24,8 +23,11 @@ function Settings({ projectId }) {
       maxWidth="xl"
       sx={{ background: "#090810", marginTop: "0rem", paddingTop: "2rem" }}
     >
-      <Container maxWidth="md" sx={{ background: "#090810", padding: '2rem' }}>
-        <Typography variant="h4" style={{ color: theme.palette.text.primary, marginBottom: '1rem' }}>
+      <Container maxWidth="md" sx={{ background: "#090810", padding: "2rem" }}>
+        <Typography
+          variant="h4"
+          style={{ color: theme.palette.text.primary, marginBottom: "1rem" }}
+        >
           Settings for Project {projectId}
         </Typography>
 
@@ -72,7 +74,12 @@ function Settings({ projectId }) {
           InputProps={{ style: { color: theme.palette.text.primary } }}
         />
 
-        <Button variant="contained" color="info" onClick={handleSave} style={{ marginTop: '16px' }}>
+        <Button
+          variant="contained"
+          color="info"
+          onClick={handleSave}
+          style={{ marginTop: "16px" }}
+        >
           Save
         </Button>
       </Container>

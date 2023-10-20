@@ -66,34 +66,30 @@ const resolvers = {
         const project = await Project.findById(projectId);
         return project;
       } catch (error) {
-        console.error('Error finding project by ID:', error);
-        throw new Error('Internal server error');
+        console.error("Error finding project by ID:", error);
+        throw new Error("Internal server error");
       }
     },
     findProfileById: async (_, { userId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("Authentication required");
       }
-    
+
       try {
         // Fetch the profile by user ID
         const profile = await Profile.findOne({ user: userId });
-    
+
         // Check if the profile exists
         if (!profile) {
           throw new ApolloError("Profile not found");
         }
-    
-        
-    
+
         return profile;
       } catch (error) {
         console.error("Error finding profile by user ID:", error);
         throw new ApolloError("Error finding profile");
       }
     },
-
-    
   },
   Mutation: {
     login: async (_, { email, password }) => {
@@ -220,8 +216,6 @@ const resolvers = {
       try {
         // Check if the authenticated user is removing their own account
         if (context.user._id === userId) {
-          
-
           await User.findByIdAndRemove(userId);
 
           // Return true to indicate success

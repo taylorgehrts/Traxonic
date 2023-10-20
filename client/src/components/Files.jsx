@@ -34,7 +34,6 @@ function Files({ projectId, realProjectId }) {
   const [audioUrl, setAudioUrl] = useState(null);
 
   useEffect(() => {
-    
     return () => {
       if (audioPlayerRef.current) {
         audioPlayerRef.current.pause();
@@ -58,7 +57,9 @@ function Files({ projectId, realProjectId }) {
   const handlePlayPause = async (fileKey) => {
     try {
       const fileName = extractFileName(fileKey);
-      const newAudioUrl = await Storage.get(`projects/${realProjectId}/${fileName}`);
+      const newAudioUrl = await Storage.get(
+        `projects/${realProjectId}/${fileName}`
+      );
 
       if (playingFile === fileKey) {
         // Pause if the same file is playing
@@ -80,24 +81,22 @@ function Files({ projectId, realProjectId }) {
   };
 
   useEffect(() => {
-  
     return () => {
       audio.pause();
       audio.src = "";
     };
-  }, [audio]); 
-  
+  }, [audio]);
+
   const isAudioFile = (fileKey) => {
     // Extract file extension
-    const fileExtension = fileKey.split('.').pop();
+    const fileExtension = fileKey.split(".").pop();
 
     // List of audio file extensions you want to support
-    const audioExtensions = ['mp3', 'wav', 'ogg', 'aac', 'flac'];
+    const audioExtensions = ["mp3", "wav", "ogg", "aac", "flac"];
 
     // Check if the file extension is in the list of audio file extensions
     return audioExtensions.includes(fileExtension.toLowerCase());
   };
-  
 
   // Function to extract the file name from the key
   const extractFileName = (key) => {
@@ -146,7 +145,6 @@ function Files({ projectId, realProjectId }) {
     try {
       console.log("Selected files to delete:", selectedFiles);
 
-      
       await Promise.all(
         selectedFiles.map(async (fileKey) => {
           await Storage.remove(fileKey); // Remove the file from S3
@@ -168,7 +166,6 @@ function Files({ projectId, realProjectId }) {
     try {
       console.log("Selected files to download:", selectedFiles);
 
-      
       const downloadPromises = selectedFiles.map(async (fileKey) => {
         try {
           const fileName = extractFileName(fileKey);
@@ -208,7 +205,7 @@ function Files({ projectId, realProjectId }) {
   // const handleDownloadFile = (downloadUrl) => {
   //   // Implement the logic to handle file download
   //   console.log("Downloading file from:", downloadUrl);
-  
+
   // };
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -356,14 +353,18 @@ function Files({ projectId, realProjectId }) {
                   primary={extractFileName(file.key)}
                   sx={{ color: "#FFFFFF", flex: 1 }}
                 />
-                 {isAudioFile(file.key) && (
-                <IconButton
-                  style={{ color: "#FFFFFF", cursor: "pointer" }}
-                  onClick={() => handlePlayPause(file.key)}
-                >
-                  {playingFile === file.key ? <PauseIcon /> : <PlayArrowIcon />}
-                </IconButton>
-              )}
+                {isAudioFile(file.key) && (
+                  <IconButton
+                    style={{ color: "#FFFFFF", cursor: "pointer" }}
+                    onClick={() => handlePlayPause(file.key)}
+                  >
+                    {playingFile === file.key ? (
+                      <PauseIcon />
+                    ) : (
+                      <PlayArrowIcon />
+                    )}
+                  </IconButton>
+                )}
                 {!isSmallScreen && (
                   <>
                     <ListItemText
@@ -376,7 +377,7 @@ function Files({ projectId, realProjectId }) {
                     />
                   </>
                 )}
-                
+
                 {console.log("File size:", file.size)}
                 {console.log("File lastModified:", file.lastModified)}
               </ListItem>
