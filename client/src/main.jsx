@@ -6,13 +6,17 @@ import theme from './theme';
 import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { AuthProvider } from './components/AuthContext'; // Update the path
+import { AuthProvider } from './components/AuthContext'; 
 
 // Import BrowserRouter
 import { BrowserRouter as Router } from 'react-router-dom';
 
+// const httpLink = createHttpLink({
+//   uri: 'http://localhost:3001/graphql',
+// });
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'https://secure-basin-55131.herokuapp.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -44,7 +48,6 @@ createRoot(document.getElementById('root')).render(
   <>
     <CssBaseline />
     <Router>
-      {/* Wrap your entire application with BrowserRouter */}
       <ThemeProvider theme={theme}>
         <AppWithApollo />
       </ThemeProvider>

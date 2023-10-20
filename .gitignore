@@ -8,6 +8,8 @@ debug.log
 .DS_Store
 
 adminSeeds.js
+.env
+
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
